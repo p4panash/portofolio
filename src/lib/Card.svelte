@@ -2,13 +2,16 @@
 	export let title = '';
 	export let image = ''; // Optional image URL
 	export let sizeStyling = '';
+	export let background = 'bg-light-bg dark:bg-dark-bg';
 </script>
 
 <div
-	class={'rounded-lg border border-black overflow-hidden shadow-lg bg-light-bg dark:bg-dark-bg text-light-text dark:text-dark-text hover:shadow-soft-glow ' +
-		sizeStyling}
+	class={'rounded-lg border overflow-hidden shadow-lg  text-light-text dark:text-dark-text hover:shadow-soft-glow ' +
+		sizeStyling +
+		' ' +
+		background}
 >
-	<div class="p-6">
+	<div class="p-5 w-full h-full flex flex-col justify-end">
 		{#if title}
 			<h2 class="text-xl font-semibold mb-2">{title}</h2>
 		{/if}
