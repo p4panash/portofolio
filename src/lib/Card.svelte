@@ -12,9 +12,9 @@
 		background}
 >
 	<div class="p-5 w-full h-full flex flex-col justify-end">
-		{#if title}
-			<h2 class="text-xl font-semibold mb-2">{title}</h2>
-		{/if}
 		<slot />
+		{#if title}
+			<h2 class="text-xl font-semibold mt-2">{title}</h2>
+		{/if}
 	</div>
 </div>
