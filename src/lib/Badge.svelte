@@ -15,7 +15,6 @@
 		SiVercel,
 		SiI18next
 	} from '@icons-pack/svelte-simple-icons';
-
 	import DokkuLogo from './svgs/DokkuLogo.svelte';
 
 	export let name = '';
@@ -56,13 +55,23 @@
 	]);
 
 	const [Icon, color, background] = icons.get(name.toLowerCase()) || [];
+
+	let isExpanded = false;
 </script>
 
-<div class={'rounded shadow flex p-1 justify-center ' + (gradientBackground ? background : '')}>
+<button
+	class={'cursor-pointer rounded shadow flex p-1 justify-center' +
+		(gradientBackground ? background : '')}
+	on:click={() => (isExpanded = !isExpanded)}
+>
 	<div class="flex gap-2">
 		{#if Icon}
 			<Icon size={24} {color} />
 		{/if}
-		<span class="text-gray-100 dark:text-gray-200 font-medium">{name}</span>
+		{#if isExpanded}
+			<span class="text-gray-100 dark:text-gray-200 font-medium">
+				{name}
+			</span>
+		{/if}
 	</div>
-</div>
+</button>

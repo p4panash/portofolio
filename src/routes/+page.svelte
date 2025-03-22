@@ -33,6 +33,7 @@
 
 	<Card
 		title="This beauty"
+		hiddenTitle={true}
 		sizeStyling="lg:col-span-1 lg:row-span-2"
 		background="bg-gradient-to-tl from-violet-500 to-fuchsia-500"
 	>
@@ -45,6 +46,7 @@
 
 	<Card
 		title="Manga App"
+		hiddenTitle={true}
 		sizeStyling="lg:col-span-1 lg:row-span-2"
 		background="bg-gradient-to-tl from-rose-500 to-purple-500"
 	>
@@ -61,6 +63,7 @@
 
 	<Card
 		title="Imi Permit"
+		hiddenTitle={true}
 		sizeStyling="lg:col-span-2 lg:row-span-2"
 		background="bg-gradient-to-tl from-pink-400 to-indigo-400"
 	>
