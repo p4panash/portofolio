@@ -36,7 +36,7 @@
 			<div
 				class="flex items-center gap-2 absolute right-3 top-2 rounded-lg border bg-light-bg dark:bg-dark-bg py-1 px-2"
 			>
-				<h2 class="text-xl font-semibold whitespace-nowrap">{title}</h2>
+				<span class="font-semibold whitespace-nowrap">{title}</span>
 				<NewTab size={18} />
 			</div>
 		{/if}

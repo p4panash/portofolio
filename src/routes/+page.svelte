@@ -64,7 +64,7 @@
 	<Card
 		title="Imi Permit"
 		hiddenTitle={true}
-		sizeStyling="lg:col-span-2 lg:row-span-2"
+		sizeStyling="lg:col-span-2 lg:row-span-3"
 		background="bg-gradient-to-tl from-pink-400 to-indigo-400"
 	>
 		<div class="flex flex-wrap gap-1">
@@ -81,11 +81,7 @@
 		</div>
 	</Card>
 
-	<Card title="Social Media" sizeStyling="lg:col-span-1 lg:row-span-1" />
+	<Card title="Map" sizeStyling="lg:col-span-1 lg:row-span-2" />
 
-	<Card title="Map" sizeStyling="lg:col-span-1 lg:row-span-1" />
-
-	<Card title="Other stuff / Github repo" sizeStyling="lg:col-span-1 lg:row-span-1" />
-
-	<Card title="More to come & contact" sizeStyling="lg:col-span-2 lg:row-span-1" />
+	<Card title="LinkedIn/Github/Contanct" sizeStyling="lg:col-span-1 lg:row-span-1" />
 </div>
