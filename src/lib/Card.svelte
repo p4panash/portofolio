@@ -7,6 +7,7 @@
 	export let hiddenTitle = false;
 	export let clickable = false;
 	export let index = 1;
+	export let noPadding = false;
 
 	let isFocused = hiddenTitle ? false : true;
 
@@ -28,7 +29,7 @@
 		`${clickable ? 'hover:shadow-soft-glow cursor-pointer hover:border-vivid-blue ' : ''}` +
 		background}
 >
-	<div class="p-5 w-full h-full flex flex-col justify-end relative">
+	<div class="{noPadding ? '' : 'p-5'} w-full h-full flex flex-col justify-end relative">
 		<slot />
 		{#if title && !hiddenTitle}
 			<h2 class="text-xl font-semibold mt-2">{title}</h2>
