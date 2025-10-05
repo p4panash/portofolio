@@ -6,7 +6,7 @@
 <div
 	class="container min-h-[80vh] mx-auto grid gap-3 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 grid-rows-5"
 >
-	<Card sizeStyling="lg:col-span-2 lg:row-span-2 ">
+	<Card sizeStyling="lg:col-span-2 lg:row-span-2" clickable={true}>
 		<div class="h-full flex flex-col justify-between">
 			<div class="flex justify-between">
 				<div class="flex">
@@ -34,6 +34,7 @@
 	<Card
 		title="This beauty"
 		hiddenTitle={true}
+		clickable={true}
 		sizeStyling="lg:col-span-1 lg:row-span-2"
 		background="bg-gradient-to-tl from-violet-500 to-fuchsia-500"
 	>
@@ -47,6 +48,7 @@
 	<Card
 		title="Manga App"
 		hiddenTitle={true}
+		clickable={true}
 		sizeStyling="lg:col-span-1 lg:row-span-2"
 		background="bg-gradient-to-tl from-rose-500 to-purple-500"
 	>
@@ -57,13 +59,24 @@
 		</div>
 	</Card>
 
-	<Card title="Tech stack" sizeStyling="lg:col-span-1 lg:row-span-1" />
+	<Card title="Tech stack" sizeStyling="lg:col-span-1 lg:row-span-1" clickable={true}>
+		<div class="flex flex-wrap gap-1">
+			<Badge isExpandable={false} name="React" />
+			<Badge isExpandable={false} name="Next.js" />
+			<Badge isExpandable={false} name="Redux" />
+			<Badge isExpandable={false} name="Ruby on Rails" />
+			<Badge isExpandable={false} name="PostgreSQL" />
+			<Badge isExpandable={false} name="Redis" />
+			<Badge isExpandable={false} name="Sidekiq" />
+		</div>
+	</Card>
 
 	<Card title="Photos" sizeStyling="lg:col-span-1 lg:row-span-2" />
 
 	<Card
 		title="Imi Permit"
 		hiddenTitle={true}
+		clickable={true}
 		sizeStyling="lg:col-span-2 lg:row-span-3"
 		background="bg-gradient-to-tl from-pink-400 to-indigo-400"
 	>

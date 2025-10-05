@@ -19,7 +19,7 @@ export default {
 				'hover-blue': '#5C52DB'
 			},
 			boxShadow: {
-				'soft-glow': '0 0 20px #6C63FF'
+				'soft-glow': '0 0 5px #6C63FF'
 			}
 		}
 	},

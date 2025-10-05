@@ -2,10 +2,10 @@
 	import NewTab from './svgs/NewTab.svelte';
 
 	export let title = '';
-	export let image = ''; // Optional image URL
 	export let sizeStyling = '';
 	export let background = 'bg-light-bg dark:bg-dark-bg';
 	export let hiddenTitle = false;
+	export let clickable = false;
 	export let index = 1;
 
 	let isFocused = hiddenTitle ? false : true;
@@ -22,9 +22,10 @@
 	tabindex={index}
 	on:mouseenter={changeFocus}
 	on:mouseleave={changeFocus}
-	class={'rounded-lg border overflow-hidden shadow-lg text-light-text dark:text-dark-text hover:shadow-soft-glow ' +
+	class={'rounded-lg border overflow-hidden shadow-lg text-light-text dark:text-dark-text ' +
 		sizeStyling +
 		' ' +
+		`${clickable ? 'hover:shadow-soft-glow cursor-pointer hover:border-vivid-blue ' : ''}` +
 		background}
 >
 	<div class="p-5 w-full h-full flex flex-col justify-end relative">
