@@ -19,3 +19,12 @@ Thumbs.db
 # Vite
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
+
+# Playwright
+/test-results/
+/playwright-report/
+/playwright/.cache/
+# Note: Baseline snapshots (*-snapshots/) should be committed to git
+# Only ignore actual/diff images from test runs
+/tests/**/*-actual.png
+/tests/**/*-diff.png
