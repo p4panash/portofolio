@@ -11,7 +11,7 @@ export class ThemeHelper {
 	 */
 	async toggleDarkMode() {
 		// Find and click the theme toggle button
-		const themeToggle = this.page.getByRole('button', { name: /theme/i });
+		const themeToggle = this.page.getByRole('button', { name: /Toggle (Light|Dark) Mode/i });
 		await themeToggle.click();
 		// Wait for theme transition
 		await this.page.waitForTimeout(300);

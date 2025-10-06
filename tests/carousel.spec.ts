@@ -30,9 +30,9 @@ test.describe('Carousel Component', () => {
 
 			await carousel.waitForCarouselLoad();
 
-			// Should have 5 placeholder images
+			// Should have 6 images
 			const slideCount = await carousel.getSlideCount();
-			expect(slideCount).toBe(5);
+			expect(slideCount).toBe(6);
 		});
 
 		test('should highlight active dot indicator', async ({ page }) => {
@@ -109,9 +109,9 @@ test.describe('Carousel Component', () => {
 
 			await carousel.waitForCarouselLoad();
 
-			// Go to last slide (index 4)
-			await carousel.goToSlide(4);
-			expect(await carousel.getActiveSlideIndex()).toBe(4);
+			// Go to last slide (index 5)
+			await carousel.goToSlide(5);
+			expect(await carousel.getActiveSlideIndex()).toBe(5);
 
 			// Click next
 			await carousel.clickNext();
@@ -131,8 +131,8 @@ test.describe('Carousel Component', () => {
 			// Click previous
 			await carousel.clickPrevious();
 
-			// Should wrap to last slide (index 4)
-			expect(await carousel.getActiveSlideIndex()).toBe(4);
+			// Should wrap to last slide (index 5)
+			expect(await carousel.getActiveSlideIndex()).toBe(5);
 		});
 	});
 
@@ -255,7 +255,7 @@ test.describe('Carousel Component', () => {
 			// Verify we're on slide 1 (check the expanded image src)
 			const expandedImage = carousel.getExpandedImage();
 			const src = await expandedImage.getAttribute('src');
-			expect(src).toContain('placeholder-2.jpg');
+			expect(src).toContain('2.jpeg');
 		});
 
 		test('should preserve expanded state when navigating', async ({ page }) => {
@@ -278,7 +278,7 @@ test.describe('Carousel Component', () => {
 			// Should be on slide 1 now
 			const expandedImage = carousel.getExpandedImage();
 			const src = await expandedImage.getAttribute('src');
-			expect(src).toContain('placeholder-2.jpg');
+			expect(src).toContain('2.jpeg');
 		});
 
 		test('should display expanded image with correct styling', async ({ page }) => {
@@ -413,7 +413,7 @@ test.describe('Carousel Component', () => {
 			// Get initial image src
 			const expandedImage = carousel.getExpandedImage();
 			const initialSrc = await expandedImage.getAttribute('src');
-			expect(initialSrc).toContain('placeholder-1.jpg');
+			expect(initialSrc).toContain('1.jpeg');
 
 			// Press ArrowRight to go to next slide
 			await page.keyboard.press('ArrowRight');
@@ -421,7 +421,7 @@ test.describe('Carousel Component', () => {
 
 			// Should be on slide 2
 			const nextSrc = await expandedImage.getAttribute('src');
-			expect(nextSrc).toContain('placeholder-2.jpg');
+			expect(nextSrc).toContain('2.jpeg');
 
 			// Press ArrowLeft to go back
 			await page.keyboard.press('ArrowLeft');
@@ -429,10 +429,13 @@ test.describe('Carousel Component', () => {
 
 			// Should be back on slide 1
 			const backSrc = await expandedImage.getAttribute('src');
-			expect(backSrc).toContain('placeholder-1.jpg');
+			expect(backSrc).toContain('1.jpeg');
 		});
 
-		test('should support Tab navigation to focus buttons', async ({ page }) => {
+		test('should support Tab navigation to focus buttons', async ({ page, browserName }) => {
+			// Skip for webkit as it has different tab navigation behavior
+			test.skip(browserName === 'webkit', 'Tab navigation works differently in webkit');
+
 			const carousel = getCarouselHelper(page);
 
 			await carousel.waitForCarouselLoad();
@@ -451,9 +454,14 @@ test.describe('Carousel Component', () => {
 
 			await carousel.waitForCarouselLoad();
 
-			// Take screenshot of the Photos card
-			const photosCard = page.locator('text=Photos').locator('..');
-			await expect(photosCard).toHaveScreenshot('carousel-light-mode.png', {
+			// Find the carousel by looking for the image with "Carousel slide" alt and get its parent container
+			const carouselContainer = page
+				.locator('img[alt*="Carousel slide"]')
+				.first()
+				.locator('..')
+				.locator('..')
+				.locator('..');
+			await expect(carouselContainer).toHaveScreenshot('carousel-light-mode.png', {
 				maxDiffPixels: 100
 			});
 		});
@@ -463,11 +471,20 @@ test.describe('Carousel Component', () => {
 			const theme = getThemeHelper(page);
 
 			await carousel.waitForCarouselLoad();
-			await theme.toggleDarkMode();
-			await page.waitForTimeout(500);
 
-			const photosCard = page.locator('text=Photos').locator('..');
-			await expect(photosCard).toHaveScreenshot('carousel-dark-mode.png', {
+			// Go to first slide to ensure consistent snapshot
+			await carousel.goToSlide(0);
+
+			await theme.toggleDarkMode();
+			await page.waitForTimeout(800);
+
+			const carouselContainer = page
+				.locator('img[alt*="Carousel slide"]')
+				.first()
+				.locator('..')
+				.locator('..')
+				.locator('..');
+			await expect(carouselContainer).toHaveScreenshot('carousel-dark-mode.png', {
 				maxDiffPixels: 100
 			});
 		});

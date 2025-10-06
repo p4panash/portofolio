@@ -24,6 +24,9 @@ export class CarouselHelper {
 		// Wait for at least one image to be visible
 		await this.page.locator('img[alt*="Carousel slide"]').first().waitFor({ state: 'visible' });
 		await this.page.waitForTimeout(500); // Wait for transitions
+
+		// Navigate to slide 0 to ensure consistent starting state
+		await this.goToSlide(0);
 	}
 
 	/**
@@ -76,8 +79,13 @@ export class CarouselHelper {
 	 * Click on the current image to expand it
 	 */
 	async expandCurrentImage() {
-		const currentImage = this.getCurrentSlideImage();
-		await currentImage.click();
+		// Wait for carousel to stabilize
+		await this.page.waitForTimeout(600);
+
+		// Get the active slide index and click on that specific expand button
+		const activeIndex = await this.getActiveSlideIndex();
+		const expandButtons = this.page.getByRole('button', { name: 'Expand image' });
+		await expandButtons.nth(activeIndex).click({ force: true });
 		await this.page.waitForTimeout(300); // Wait for modal animation
 	}
 
