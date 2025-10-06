@@ -150,16 +150,65 @@ Comprehensive test suite for the MapCard component covering:
 - Screenshot comparison in dark mode
 - Screenshot of zoom controls
 
+### Carousel Tests (`tests/carousel.spec.ts`)
+
+Comprehensive test suite for the Carousel component covering:
+
+#### 1. **Carousel Rendering**
+
+- Verifies carousel renders with images
+- Checks navigation controls (prev/next buttons, dots)
+- Validates correct number of dot indicators
+- Tests active dot highlighting
+- Confirms images use `object-cover` styling
+
+#### 2. **Carousel Navigation**
+
+- Tests next/previous slide navigation
+- Validates dot indicator navigation
+- Tests wrap-around behavior (last→first, first→last)
+
+#### 3. **Auto-play Functionality**
+
+- Tests automatic slide advancement (5 second interval)
+- Validates auto-play timer reset on manual navigation
+
+#### 4. **Expanded View**
+
+- Tests click-to-expand functionality
+- Validates multiple close methods (button, backdrop, Escape key)
+- Tests navigation in expanded view
+- Confirms proper styling in expanded mode
+
+#### 5. **Dark Mode Integration**
+
+- Tests carousel visibility in dark mode
+- Validates dark mode styling on controls
+- Tests expanded view dark mode styling
+
+#### 6. **Accessibility**
+
+- Validates ARIA labels on all interactive elements
+- Tests keyboard navigation support
+- Confirms proper dialog semantics for modal
+
+#### 7. **Visual Regression**
+
+- Screenshot comparison in light/dark modes
+- Screenshot of expanded view
+
 ## Test Helpers
 
-The `tests/helpers/map-helpers.ts` file provides a `MapCardHelper` class with utility methods:
+### MapCard Helpers (`tests/helpers/map-helpers.ts`)
+
+The `MapCardHelper` class provides utility methods for MapCard component testing:
 
 - `waitForMapLoad()` - Wait for Mapbox map to fully load
 - `waitForMarker()` - Wait for custom marker to appear
 - `isZoomInDisabled()` / `isZoomOutDisabled()` - Check button states
 - `clickZoomIn()` / `clickZoomOut()` - Interact with zoom controls
-- `toggleDarkMode()` - Switch between light/dark themes
-- `isDarkMode()` - Check current theme
+- `toggleDarkMode()` - Switch between light/dark themes (uses shared ThemeHelper)
+- `isDarkMode()` - Check current theme (uses shared ThemeHelper)
 - `zoomInMultiple()` / `zoomOutMultiple()` - Zoom multiple times
 - `assertZoomControlsVisible()` - Assert both buttons are visible
 - `getMarkerCircle()` - Get the marker circle element
@@ -167,6 +216,33 @@ The `tests/helpers/map-helpers.ts` file provides a `MapCardHelper` class with ut
 - `isMarkerLarge()` - Check if marker has large radius (at initial zoom)
 - `getMarker()` - Get the marker element
 - Additional helper methods for styling and state checks
+
+### Carousel Helpers (`tests/helpers/carousel-helpers.ts`)
+
+The `CarouselHelper` class provides utility methods for Carousel component testing:
+
+- `waitForCarouselLoad()` - Wait for carousel images to load
+- `getDots()` / `getActiveDot()` - Access dot indicators
+- `goToSlide(index)` - Navigate to specific slide
+- `clickNext()` / `clickPrevious()` - Navigate between slides
+- `getCurrentSlideImage()` - Get currently visible image
+- `expandCurrentImage()` - Click to expand current image
+- `isExpanded()` - Check if modal is open
+- `closeExpandedView()` - Close modal with button
+- `closeByBackdrop()` / `closeByEscapeKey()` - Alternative close methods
+- `getExpandedImage()` - Get expanded modal image
+- `clickNextInExpanded()` / `clickPreviousInExpanded()` - Navigate in expanded view
+- `assertControlsVisible()` - Assert navigation controls visible
+- `getSlideCount()` / `getActiveSlideIndex()` - Carousel state queries
+
+### Theme Helpers (`tests/helpers/theme-helpers.ts`)
+
+The `ThemeHelper` class provides reusable dark mode utilities (shared across all tests):
+
+- `toggleDarkMode()` - Toggle between light/dark mode
+- `isDarkMode()` - Check if dark mode is active
+- `ensureLightMode()` - Ensure page is in light mode
+- `ensureDarkMode()` - Ensure page is in dark mode
 
 ## Configuration
 
@@ -395,7 +471,7 @@ test('should do something with the map', async ({ page }) => {
 
 ## Test Coverage
 
-Current test coverage includes:
+### MapCard Component (`tests/map-card.spec.ts`)
 
 - ✅ Map rendering and initialization
 - ✅ Custom marker display and styling (👨🏼‍💻 emoji)
@@ -410,6 +486,20 @@ Current test coverage includes:
 - ✅ Dark mode theme switching
 - ✅ Accessibility features
 - ✅ Visual regression (screenshots)
+
+### Carousel Component (`tests/carousel.spec.ts`)
+
+- ✅ Carousel rendering with multiple images
+- ✅ Navigation controls (prev/next buttons, dot indicators)
+- ✅ Slide navigation (manual and programmatic)
+- ✅ Auto-play functionality (5 second interval)
+- ✅ Click-to-expand image modal
+- ✅ Multiple modal close methods (button, backdrop, Escape key)
+- ✅ Navigation in expanded view
+- ✅ Image display with `object-cover` styling
+- ✅ Dark mode integration
+- ✅ Accessibility (ARIA labels, keyboard support)
+- ✅ Visual regression (light/dark modes, expanded view)
 
 ## Resources
 

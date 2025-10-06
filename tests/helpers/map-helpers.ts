@@ -1,5 +1,6 @@
 import { expect } from '@playwright/test';
 import type { Page, Locator } from '@playwright/test';
+import { getThemeHelper } from './theme-helpers';
 
 /**
  * Helper class for interacting with the MapCard component in tests
@@ -9,14 +10,12 @@ export class MapCardHelper {
 	readonly zoomInButton: Locator;
 	readonly zoomOutButton: Locator;
 	readonly mapContainer: Locator;
-	readonly themeToggleButton: Locator;
 
 	constructor(page: Page) {
 		this.page = page;
 		this.zoomInButton = page.getByRole('button', { name: 'Zoom in' });
 		this.zoomOutButton = page.getByRole('button', { name: 'Zoom out' });
 		this.mapContainer = page.locator('.mapboxgl-canvas');
-		this.themeToggleButton = page.getByRole('button', { name: /Toggle.*Mode/i });
 	}
 
 	/**
@@ -72,21 +71,19 @@ export class MapCardHelper {
 	}
 
 	/**
-	 * Toggle dark mode
+	 * Toggle dark mode (uses shared ThemeHelper)
 	 */
 	async toggleDarkMode() {
-		await this.themeToggleButton.click();
-		// Wait for theme transition
-		await this.page.waitForTimeout(300);
+		const theme = getThemeHelper(this.page);
+		await theme.toggleDarkMode();
 	}
 
 	/**
-	 * Check if dark mode is active
+	 * Check if dark mode is active (uses shared ThemeHelper)
 	 */
 	async isDarkMode(): Promise<boolean> {
-		const html = this.page.locator('html');
-		const classes = await html.getAttribute('class');
-		return classes?.includes('dark') ?? false;
+		const theme = getThemeHelper(this.page);
+		return await theme.isDarkMode();
 	}
 
 	/**
