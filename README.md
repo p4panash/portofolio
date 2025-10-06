@@ -1,5 +1,7 @@
 # create-svelte
 
+[![Playwright Tests](https://github.com/p4panash/portofolio/actions/workflows/playwright.yml/badge.svg)](https://github.com/p4panash/portofolio/actions/workflows/playwright.yml)
+
 Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).
 
 ## Creating a project
