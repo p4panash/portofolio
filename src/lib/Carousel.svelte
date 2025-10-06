@@ -36,10 +36,31 @@
 
 	const toggleExpand = () => {
 		isExpanded = !isExpanded;
+		if (isExpanded) {
+			// Focus the modal when it opens to enable keyboard events
+			setTimeout(() => {
+				const modal = document.querySelector('[role="dialog"]');
+				if (modal instanceof HTMLElement) {
+					modal.focus();
+				}
+			}, 0);
+		}
 	};
 
 	const closeExpanded = () => {
 		isExpanded = false;
+	};
+
+	const handleKeydown = (e: KeyboardEvent) => {
+		if (!isExpanded) return;
+
+		if (e.key === 'Escape') {
+			closeExpanded();
+		} else if (e.key === 'ArrowLeft') {
+			prevSlide();
+		} else if (e.key === 'ArrowRight') {
+			nextSlide();
+		}
 	};
 
 	$: if (images.length > 0) {
@@ -100,15 +121,15 @@
 
 <!-- Expanded Image Modal -->
 {#if isExpanded}
-	<!-- svelte-ignore a11y-click-events-have-key-events -->
 	<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
+	<!-- svelte-ignore a11y-no-noninteractive-tabindex -->
 	<div
 		class="fixed inset-0 z-50 bg-black bg-opacity-90 flex items-center justify-center"
 		on:click={closeExpanded}
-		on:keydown={(e) => e.key === 'Escape' && closeExpanded()}
+		on:keydown={handleKeydown}
 		role="dialog"
 		aria-modal="true"
-		tabindex="-1"
+		tabindex="0"
 	>
 		<button
 			on:click={closeExpanded}

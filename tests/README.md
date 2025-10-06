@@ -189,7 +189,8 @@ Comprehensive test suite for the Carousel component covering:
 #### 6. **Accessibility**
 
 - Validates ARIA labels on all interactive elements
-- Tests keyboard navigation support
+- Tests keyboard navigation support (Escape to close, Arrow keys to navigate)
+- Confirms Tab navigation for focus management
 - Confirms proper dialog semantics for modal
 
 #### 7. **Visual Regression**
@@ -498,7 +499,7 @@ test('should do something with the map', async ({ page }) => {
 - ✅ Navigation in expanded view
 - ✅ Image display with `object-cover` styling
 - ✅ Dark mode integration
-- ✅ Accessibility (ARIA labels, keyboard support)
+- ✅ Accessibility (ARIA labels, keyboard navigation with Escape/Arrow keys, Tab focus)
 - ✅ Visual regression (light/dark modes, expanded view)
 
 ## Resources

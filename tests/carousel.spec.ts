@@ -389,15 +389,58 @@ test.describe('Carousel Component', () => {
 			expect(altText).toMatch(/Carousel slide \d+/);
 		});
 
-		test('should support keyboard navigation in expanded view', async ({ page }) => {
+		test('should close expanded view with Escape key', async ({ page }) => {
 			const carousel = getCarouselHelper(page);
 
 			await carousel.waitForCarouselLoad();
 			await carousel.expandCurrentImage();
 
-			// Focus should be manageable
+			expect(await carousel.isExpanded()).toBe(true);
+
+			// Press Escape to close
+			await page.keyboard.press('Escape');
+			await page.waitForTimeout(300);
+
+			expect(await carousel.isExpanded()).toBe(false);
+		});
+
+		test('should navigate with arrow keys in expanded view', async ({ page }) => {
+			const carousel = getCarouselHelper(page);
+
+			await carousel.waitForCarouselLoad();
+			await carousel.expandCurrentImage();
+
+			// Get initial image src
+			const expandedImage = carousel.getExpandedImage();
+			const initialSrc = await expandedImage.getAttribute('src');
+			expect(initialSrc).toContain('placeholder-1.jpg');
+
+			// Press ArrowRight to go to next slide
+			await page.keyboard.press('ArrowRight');
+			await page.waitForTimeout(600);
+
+			// Should be on slide 2
+			const nextSrc = await expandedImage.getAttribute('src');
+			expect(nextSrc).toContain('placeholder-2.jpg');
+
+			// Press ArrowLeft to go back
+			await page.keyboard.press('ArrowLeft');
+			await page.waitForTimeout(600);
+
+			// Should be back on slide 1
+			const backSrc = await expandedImage.getAttribute('src');
+			expect(backSrc).toContain('placeholder-1.jpg');
+		});
+
+		test('should support Tab navigation to focus buttons', async ({ page }) => {
+			const carousel = getCarouselHelper(page);
+
+			await carousel.waitForCarouselLoad();
+			await carousel.expandCurrentImage();
+
+			// Tab should move focus to close button
+			await page.keyboard.press('Tab');
 			const closeButton = carousel.closeButton;
-			await closeButton.focus();
 			await expect(closeButton).toBeFocused();
 		});
 	});
