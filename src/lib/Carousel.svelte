@@ -1,0 +1,150 @@
+<script lang="ts">
+	export let images: string[] = [];
+	export let autoPlayInterval: number = 5000; // 5 seconds default
+
+	let currentIndex = 0;
+	let isExpanded = false;
+	let autoPlayTimer: ReturnType<typeof setInterval> | null = null;
+
+	const goToSlide = (index: number) => {
+		currentIndex = index;
+		resetAutoPlay();
+	};
+
+	const nextSlide = () => {
+		currentIndex = (currentIndex + 1) % images.length;
+		resetAutoPlay();
+	};
+
+	const prevSlide = () => {
+		currentIndex = (currentIndex - 1 + images.length) % images.length;
+		resetAutoPlay();
+	};
+
+	const resetAutoPlay = () => {
+		if (autoPlayTimer) {
+			clearInterval(autoPlayTimer);
+		}
+		startAutoPlay();
+	};
+
+	const startAutoPlay = () => {
+		autoPlayTimer = setInterval(() => {
+			currentIndex = (currentIndex + 1) % images.length;
+		}, autoPlayInterval);
+	};
+
+	const toggleExpand = () => {
+		isExpanded = !isExpanded;
+	};
+
+	const closeExpanded = () => {
+		isExpanded = false;
+	};
+
+	$: if (images.length > 0) {
+		startAutoPlay();
+	}
+</script>
+
+<div class="relative w-full h-full overflow-hidden rounded-lg">
+	<!-- Images -->
+	<div class="relative w-full h-full">
+		{#each images as image, index}
+			<button
+				on:click={toggleExpand}
+				class="absolute inset-0 transition-opacity duration-500 {currentIndex === index
+					? 'opacity-100'
+					: 'opacity-0'} cursor-pointer"
+				aria-label="Expand image"
+			>
+				<img src={image} alt="Carousel slide {index + 1}" class="w-full h-full object-cover" />
+			</button>
+		{/each}
+	</div>
+
+	<!-- Navigation Controls -->
+	{#if images.length > 1}
+		<!-- Previous Button -->
+		<button
+			on:click={prevSlide}
+			class="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 bg-white dark:bg-dark-bg bg-opacity-80 dark:bg-opacity-80 backdrop-blur-sm rounded-full shadow-lg flex items-center justify-center transition-all border border-gray-200 dark:border-gray-700 hover:bg-opacity-100 dark:hover:bg-opacity-100"
+			aria-label="Previous slide"
+		>
+			<span class="text-xl font-bold text-gray-700 dark:text-gray-200">‹</span>
+		</button>
+
+		<!-- Next Button -->
+		<button
+			on:click={nextSlide}
+			class="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 bg-white dark:bg-dark-bg bg-opacity-80 dark:bg-opacity-80 backdrop-blur-sm rounded-full shadow-lg flex items-center justify-center transition-all border border-gray-200 dark:border-gray-700 hover:bg-opacity-100 dark:hover:bg-opacity-100"
+			aria-label="Next slide"
+		>
+			<span class="text-xl font-bold text-gray-700 dark:text-gray-200">›</span>
+		</button>
+
+		<!-- Dots Indicators -->
+		<div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
+			{#each images as _, index}
+				<button
+					on:click={() => goToSlide(index)}
+					class="w-2 h-2 rounded-full transition-all {currentIndex === index
+						? 'bg-white w-6'
+						: 'bg-white bg-opacity-50'}"
+					aria-label="Go to slide {index + 1}"
+				/>
+			{/each}
+		</div>
+	{/if}
+</div>
+
+<!-- Expanded Image Modal -->
+{#if isExpanded}
+	<!-- svelte-ignore a11y-click-events-have-key-events -->
+	<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
+	<div
+		class="fixed inset-0 z-50 bg-black bg-opacity-90 flex items-center justify-center"
+		on:click={closeExpanded}
+		on:keydown={(e) => e.key === 'Escape' && closeExpanded()}
+		role="dialog"
+		aria-modal="true"
+		tabindex="-1"
+	>
+		<button
+			on:click={closeExpanded}
+			class="absolute top-4 right-4 w-12 h-12 bg-white dark:bg-dark-bg bg-opacity-80 dark:bg-opacity-80 backdrop-blur-sm rounded-lg shadow-lg flex items-center justify-center transition-all border border-gray-200 dark:border-gray-700 hover:bg-opacity-100 dark:hover:bg-opacity-100"
+			aria-label="Close expanded view"
+		>
+			<span class="text-2xl font-bold text-gray-700 dark:text-gray-200">×</span>
+		</button>
+
+		<!-- svelte-ignore a11y-click-events-have-key-events -->
+		<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
+		<img
+			src={images[currentIndex]}
+			alt="Expanded view of slide {currentIndex + 1}"
+			class="max-w-[90vw] max-h-[90vh] object-contain"
+			on:click|stopPropagation
+		/>
+
+		{#if images.length > 1}
+			<!-- Previous Button -->
+			<button
+				on:click|stopPropagation={prevSlide}
+				class="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white dark:bg-dark-bg bg-opacity-80 dark:bg-opacity-80 backdrop-blur-sm rounded-full shadow-lg flex items-center justify-center transition-all border border-gray-200 dark:border-gray-700 hover:bg-opacity-100 dark:hover:bg-opacity-100"
+				aria-label="Previous slide"
+			>
+				<span class="text-2xl font-bold text-gray-700 dark:text-gray-200">‹</span>
+			</button>
+
+			<!-- Next Button -->
+			<button
+				on:click|stopPropagation={nextSlide}
+				class="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white dark:bg-dark-bg bg-opacity-80 dark:bg-opacity-80 backdrop-blur-sm rounded-full shadow-lg flex items-center justify-center transition-all border border-gray-200 dark:border-gray-700 hover:bg-opacity-100 dark:hover:bg-opacity-100"
+				aria-label="Next slide"
+			>
+				<span class="text-2xl font-bold text-gray-700 dark:text-gray-200">›</span>
+			</button>
+		{/if}
+	</div>
+{/if}
