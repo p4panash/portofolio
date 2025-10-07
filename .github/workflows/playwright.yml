@@ -51,6 +51,9 @@ jobs:
         if: steps.playwright-cache.outputs.cache-hit == 'true'
         run: pnpm exec playwright install-deps chromium
 
+      - name: Build application
+        run: pnpm run build
+
       - name: Run Playwright tests (shard ${{ matrix.shard }}/3)
         run: pnpm exec playwright test --project=chromium --shard=${{ matrix.shard }}/3 --reporter=list
 
@@ -116,5 +119,5 @@ jobs:
         uses: daun/playwright-report-comment@v3
         if: always() && github.event_name == 'pull_request'
         with:
-          report-url: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          report-file: playwright-report/results.json
           # This will comment on PRs with a summary and link to artifacts
