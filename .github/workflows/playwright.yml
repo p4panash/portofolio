@@ -57,9 +57,15 @@ jobs:
         run: pnpm run build
 
       - name: Run Playwright tests (shard ${{ matrix.shard }}/3)
-        env:
-          PLAYWRIGHT_BLOB_OUTPUT_DIR: blob-report
-        run: pnpm exec playwright test --project=chromium --shard=${{ matrix.shard }}/3 --reporter=blob --reporter=list
+        run: pnpm exec playwright test --project=chromium --shard=${{ matrix.shard }}/3
+
+      - name: Debug - Check for blob report
+        if: always()
+        run: |
+          echo "Checking for blob-report directory:"
+          ls -la blob-report/ || echo "blob-report directory not found"
+          echo "Checking test-results:"
+          ls -la test-results/ || echo "test-results directory not found"
 
       - name: Upload blob report
         uses: actions/upload-artifact@v4
