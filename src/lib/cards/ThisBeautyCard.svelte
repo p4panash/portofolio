@@ -16,17 +16,23 @@
 >
 	<!-- Decorative shapes -->
 	<div class="absolute inset-0 overflow-hidden pointer-events-none">
-		<div class="absolute -top-8 -right-8 w-32 h-32 rounded-full bg-fuchsia-300/40 dark:bg-fuchsia-700/20"></div>
+		<div
+			class="absolute -top-8 -right-8 w-32 h-32 rounded-full bg-fuchsia-300/40 dark:bg-fuchsia-700/20"
+		></div>
 	</div>
 
 	<!-- Badge section shape - mostly outside, partially covering badges -->
-	<div class="absolute -bottom-24 -left-24 w-64 h-64 rounded-full bg-violet-300/40 dark:bg-violet-700/25 pointer-events-none"></div>
+	<div
+		class="absolute -bottom-24 -left-24 w-64 h-64 rounded-full bg-violet-300/40 dark:bg-violet-700/25 pointer-events-none"
+	></div>
 
-	<div class="absolute -top-8 -right-12 w-4/5 h-3/4 flex items-start justify-end pointer-events-none overflow-visible z-10">
+	<div
+		class="absolute -top-20 -right-20 w-[130%] h-[130%] flex items-start justify-end pointer-events-none overflow-visible z-10"
+	>
 		<img
-			src="/images/projects/this-beauty.svg"
+			src="/images/projects/this-beauty.png"
 			alt="This Beauty Screenshot"
-			class="w-full h-full object-cover transform rotate-12 transition-transform duration-300 rounded-xl shadow-2xl"
+			class="w-full h-full object-contain transform rotate-12 transition-transform duration-300 rounded-xl"
 		/>
 	</div>
 	<div class="flex gap-1 relative z-20">
