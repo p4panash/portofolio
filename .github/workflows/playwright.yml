@@ -57,7 +57,7 @@ jobs:
         run: pnpm run build
 
       - name: Run Playwright tests (shard ${{ matrix.shard }}/3)
-        run: pnpm exec playwright test --project=chromium --shard=${{ matrix.shard }}/3 --reporter=list
+        run: pnpm exec playwright test --project=chromium --shard=${{ matrix.shard }}/3 --reporter=blob --reporter=list
 
       - name: Upload blob report
         uses: actions/upload-artifact@v4
