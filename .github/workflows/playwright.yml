@@ -105,12 +105,6 @@ jobs:
           path: all-blob-reports/
           pattern: blob-report-*
 
-      - name: Debug downloaded artifacts
-        run: |
-          echo "Downloaded artifacts structure:"
-          ls -la all-blob-reports/
-          find all-blob-reports/ -type f
-
       - name: Merge reports into HTML and JSON
         run: |
           # Merge all blob reports - each artifact is in its own subdirectory
@@ -118,8 +112,12 @@ jobs:
           for report in all-blob-reports/blob-report-*/report-*.zip; do
             cp "$report" merged-blob-reports/
           done
-          ls -la merged-blob-reports/
-          pnpm exec playwright merge-reports --reporter html --reporter json merged-blob-reports
+          # Merge into playwright-report directory with both HTML and JSON reporters
+          pnpm exec playwright merge-reports --reporter html --reporter json ./merged-blob-reports
+
+          # Verify output
+          echo "Merged report contents:"
+          ls -la playwright-report/ || echo "playwright-report directory not created"
 
       - name: Upload merged report
         uses: actions/upload-artifact@v4
