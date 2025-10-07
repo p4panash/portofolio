@@ -43,12 +43,14 @@
 			{#if title && !hiddenTitle}
 				<h2 class="text-xl font-semibold mt-2">{title}</h2>
 			{/if}
-			{#if hiddenTitle && isFocused}
+			{#if hiddenTitle}
 				<div
-					class="flex items-center gap-2 absolute right-3 top-2 rounded-lg border bg-light-bg dark:bg-dark-bg py-1 px-2"
+					class="flex items-center gap-2 absolute right-4 top-4 rounded-full backdrop-blur-sm bg-white/80 dark:bg-gray-900/80 shadow-lg py-2 px-3 transition-all duration-300 z-30 {isFocused ? 'pr-4' : ''}"
 				>
-					<span class="font-semibold whitespace-nowrap">{title}</span>
-					<NewTab size={18} />
+					{#if isFocused}
+						<span class="font-semibold whitespace-nowrap text-sm">{title}</span>
+					{/if}
+					<NewTab size={16} />
 				</div>
 			{/if}
 		</div>

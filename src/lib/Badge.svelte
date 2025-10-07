@@ -9,9 +9,10 @@
 
 	let isExpanded = false;
 
-	const expand = () => {
+	const expand = (e) => {
 		if (!isExpandable) return;
 
+		e.stopPropagation();
 		isExpanded = !isExpanded;
 	};
 </script>

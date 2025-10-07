@@ -67,9 +67,9 @@
 		>
 			<!-- Header -->
 			<div
-				class="sticky top-0 flex items-center justify-between px-8 py-6 bg-gradient-to-r from-light-bg via-light-bg to-transparent dark:from-dark-bg dark:via-dark-bg dark:to-transparent backdrop-blur-sm z-10"
+				class="sticky top-0 flex items-start justify-between px-8 py-6 bg-light-bg dark:bg-dark-bg z-10"
 			>
-				<h2 id="modal-title" class="text-3xl font-bold bg-gradient-to-r from-vivid-blue to-purple-500 bg-clip-text text-transparent">{projectTitle}</h2>
+				<h2 id="modal-title" class="text-3xl font-bold">{projectTitle}</h2>
 				<button
 					on:click={onClose}
 					class="ml-4 p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-all duration-200 hover:rotate-90"
@@ -93,7 +93,7 @@
 			</div>
 
 			<!-- Content -->
-			<div class="overflow-y-auto p-6 max-h-[calc(90vh-80px)]">
+			<div class="overflow-y-auto px-8 pb-6 max-h-[calc(90vh-80px)]">
 				{#if loading}
 					<div class="flex items-center justify-center py-12">
 						<div class="animate-spin rounded-full h-12 w-12 border-b-2 border-vivid-blue"></div>
@@ -104,7 +104,7 @@
 						<p class="text-sm mt-1">{error}</p>
 					</div>
 				{:else}
-					<div class="prose prose-slate dark:prose-invert max-w-none">
+					<div class="prose prose-slate dark:prose-invert max-w-none text-left">
 						{@html htmlContent}
 					</div>
 				{/if}
