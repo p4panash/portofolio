@@ -59,14 +59,6 @@ jobs:
       - name: Run Playwright tests (shard ${{ matrix.shard }}/3)
         run: pnpm exec playwright test --project=chromium --shard=${{ matrix.shard }}/3
 
-      - name: Debug - Check for blob report
-        if: always()
-        run: |
-          echo "Checking for blob-report directory:"
-          ls -la blob-report/ || echo "blob-report directory not found"
-          echo "Checking test-results:"
-          ls -la test-results/ || echo "test-results directory not found"
-
       - name: Upload blob report
         uses: actions/upload-artifact@v4
         if: always()
@@ -113,8 +105,21 @@ jobs:
           path: all-blob-reports/
           pattern: blob-report-*
 
+      - name: Debug downloaded artifacts
+        run: |
+          echo "Downloaded artifacts structure:"
+          ls -la all-blob-reports/
+          find all-blob-reports/ -type f
+
       - name: Merge reports into HTML and JSON
-        run: pnpm exec playwright merge-reports --reporter html --reporter json ./all-blob-reports
+        run: |
+          # Merge all blob reports - each artifact is in its own subdirectory
+          mkdir -p merged-blob-reports
+          for report in all-blob-reports/blob-report-*/report-*.zip; do
+            cp "$report" merged-blob-reports/
+          done
+          ls -la merged-blob-reports/
+          pnpm exec playwright merge-reports --reporter html --reporter json merged-blob-reports
 
       - name: Upload merged report
         uses: actions/upload-artifact@v4
