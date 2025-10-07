@@ -12,9 +12,30 @@
 	clickable={true}
 	{sizeStyling}
 	{onClick}
-	background="bg-gradient-to-tl from-pink-400 to-indigo-400"
+	background="bg-gradient-to-br from-pink-200/80 to-indigo-200/80 dark:from-pink-900/40 dark:to-indigo-900/40"
 >
-	<div class="flex flex-wrap gap-1">
+	<!-- Decorative shapes -->
+	<div class="absolute inset-0 overflow-hidden pointer-events-none">
+		<div
+			class="absolute top-12 -left-20 w-64 h-64 rounded-full bg-pink-300/40 dark:bg-pink-700/20"
+		></div>
+	</div>
+
+	<!-- Badge section shape - mostly outside, partially covering badges -->
+	<div
+		class="absolute -bottom-[24rem] -left-[3rem] w-[32rem] h-[32rem] rounded-full bg-indigo-300/40 dark:bg-indigo-700/25 pointer-events-none"
+	></div>
+
+	<div
+		class="absolute -top-4 -right-16 w-full h-4/5 flex items-start justify-end pointer-events-none overflow-visible z-10"
+	>
+		<img
+			src="/images/projects/imi-permit.png"
+			alt="Imi Permit Screenshot"
+			class="w-full h-full object-cover transform rotate-12 transition-transform duration-300 rounded-xl"
+		/>
+	</div>
+	<div class="flex flex-wrap gap-1 relative z-20">
 		<Badge name="Next.js" />
 		<Badge name="i18next" />
 		<Badge name="Jest" />
