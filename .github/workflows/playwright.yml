@@ -112,12 +112,16 @@ jobs:
           for report in all-blob-reports/blob-report-*/report-*.zip; do
             cp "$report" merged-blob-reports/
           done
-          # Merge into playwright-report directory with both HTML and JSON reporters
-          pnpm exec playwright merge-reports --reporter html --reporter json ./merged-blob-reports
+
+          # Merge with HTML reporter (creates playwright-report/)
+          pnpm exec playwright merge-reports --reporter html ./merged-blob-reports
+
+          # Also generate JSON report
+          pnpm exec playwright merge-reports --reporter json ./merged-blob-reports > playwright-report/results.json
 
           # Verify output
           echo "Merged report contents:"
-          ls -la playwright-report/ || echo "playwright-report directory not created"
+          ls -la playwright-report/
 
       - name: Upload merged report
         uses: actions/upload-artifact@v4
