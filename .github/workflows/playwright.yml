@@ -59,12 +59,12 @@ jobs:
       - name: Run Playwright tests (shard ${{ matrix.shard }}/3)
         run: pnpm exec playwright test --project=chromium --shard=${{ matrix.shard }}/3 --reporter=list
 
-      - name: Upload test results
+      - name: Upload blob report
         uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: playwright-report-${{ matrix.shard }}
-          path: playwright-report/
+          name: blob-report-${{ matrix.shard }}
+          path: blob-report/
           retention-days: 30
 
       - name: Upload screenshots and videos
@@ -99,15 +99,14 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: Download all reports
+      - name: Download all blob reports
         uses: actions/download-artifact@v4
         with:
-          path: all-reports/
-          pattern: playwright-report-*
-          merge-multiple: true
+          path: all-blob-reports/
+          pattern: blob-report-*
 
-      - name: Merge HTML reports
-        run: pnpm exec playwright merge-reports --reporter html ./all-reports
+      - name: Merge reports into HTML and JSON
+        run: pnpm exec playwright merge-reports --reporter html --reporter json ./all-blob-reports
 
       - name: Upload merged report
         uses: actions/upload-artifact@v4
@@ -122,4 +121,3 @@ jobs:
         if: always() && github.event_name == 'pull_request'
         with:
           report-file: playwright-report/results.json
-          # This will comment on PRs with a summary and link to artifacts
