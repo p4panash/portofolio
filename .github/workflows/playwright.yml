@@ -105,8 +105,19 @@ jobs:
           path: all-blob-reports/
           pattern: blob-report-*
 
+      - name: List downloaded artifacts (debug)
+        run: ls -la all-blob-reports/
+
       - name: Merge reports into HTML and JSON
-        run: pnpm exec playwright merge-reports --reporter html --reporter json ./all-blob-reports
+        run: |
+          # Find all blob report directories and merge them
+          shopt -s nullglob
+          reports=(all-blob-reports/blob-report-*)
+          if [ ${#reports[@]} -eq 0 ]; then
+            echo "No blob reports found to merge"
+            exit 1
+          fi
+          pnpm exec playwright merge-reports --reporter html --reporter json "${reports[@]}"
 
       - name: Upload merged report
         uses: actions/upload-artifact@v4
