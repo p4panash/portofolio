@@ -93,6 +93,8 @@ jobs:
           Triggered by: ${{ github.event.comment.user.login }}
 
           🤖 Generated with [Claude Code](https://claude.com/claude-code)"
+            # Pull with rebase in case branch was updated
+            git pull --rebase origin ${{ steps.pr-branch.outputs.ref }}
             git push
             echo "HAS_CHANGES=true" >> $GITHUB_ENV
           fi
