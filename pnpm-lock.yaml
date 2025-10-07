@@ -11,6 +11,9 @@ dependencies:
   mapbox-gl:
     specifier: ^3.15.0
     version: 3.15.0
+  marked:
+    specifier: ^16.4.0
+    version: 16.4.0
 
 devDependencies:
   '@playwright/test':
@@ -1777,6 +1780,12 @@ packages:
       serialize-to-js: 3.1.2
       supercluster: 8.0.1
       tinyqueue: 3.0.0
+    dev: false
+
+  /marked@16.4.0:
+    resolution: {integrity: sha512-CTPAcRBq57cn3R8n3hwc2REddc28hjR7RzDXQ+lXLmMJYqn20BaI2cGw6QjgZGIgVfp2Wdfw4aMzgNteQ6qJgQ==}
+    engines: {node: '>= 20'}
+    hasBin: true
     dev: false
 
   /martinez-polygon-clipping@0.7.4:
