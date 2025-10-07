@@ -24,7 +24,7 @@
 </script>
 
 <div
-	class="container min-h-[80vh] mx-auto grid gap-3 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 grid-rows-5"
+	class="container min-h-[95vh] mx-auto grid gap-3 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 grid-rows-5"
 >
 	<ProfileCard sizeStyling="lg:col-span-2 lg:row-span-2" />
 	<ThisBeautyCard sizeStyling="lg:col-span-1 lg:row-span-2" onClick={() => openProjectModal('This Beauty')} />
