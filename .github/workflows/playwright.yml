@@ -59,6 +59,16 @@ jobs:
       - name: Run Playwright tests (shard ${{ matrix.shard }}/3)
         run: pnpm exec playwright test --project=chromium --shard=${{ matrix.shard }}/3 --reporter=blob --reporter=list
 
+      - name: Debug - List all files after test
+        if: always()
+        run: |
+          echo "Current directory:"
+          pwd
+          echo "Files in current directory:"
+          ls -la
+          echo "Looking for blob-report:"
+          find . -name "blob-report" -o -name "*.zip" | head -20
+
       - name: Upload blob report
         uses: actions/upload-artifact@v4
         if: always()
