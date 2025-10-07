@@ -39,5 +39,6 @@
 		<Badge name="Svelte" />
 		<Badge name="Tailwind" />
 		<Badge name="Pnpm" />
+		<Badge name="Claude Code" />
 	</div>
 </Card>
