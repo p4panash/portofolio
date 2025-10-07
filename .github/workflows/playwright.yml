@@ -141,3 +141,30 @@ jobs:
         if: always() && github.event_name == 'pull_request'
         with:
           report-file: playwright-report/results.json
+
+      - name: Add artifact links to PR comment
+        if: always() && github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const runId = context.runId;
+            const repo = context.repo;
+            const artifactUrl = `https://github.com/${repo.owner}/${repo.repo}/actions/runs/${runId}`;
+
+            const comment = `### 📸 Test Artifacts & Screenshots
+
+            - 📊 **[View Full HTML Report](${artifactUrl}#artifacts)** - Download \`playwright-report-merged\` artifact
+            - 🖼️ **[Screenshots & Videos](${artifactUrl}#artifacts)** - Download \`playwright-screenshots-*\` artifacts
+
+            💡 **To view detailed results with screenshots:**
+            1. Download the \`playwright-report-merged\` artifact
+            2. Extract and open \`index.html\` in your browser
+            3. Click on failed tests to see screenshots, diffs, and traces
+            `;
+
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: repo.owner,
+              repo: repo.repo,
+              body: comment
+            });
