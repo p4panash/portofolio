@@ -23,10 +23,10 @@
 		}
 	};
 
-	const baseClasses = 'rounded-lg border overflow-hidden shadow-lg text-light-text dark:text-dark-text ' +
+	const baseClasses = 'rounded-lg border border-gray-200/50 dark:border-gray-700/30 overflow-hidden shadow-lg text-light-text dark:text-dark-text ' +
 		sizeStyling +
 		' ' +
-		`${clickable ? 'hover:shadow-soft-glow cursor-pointer hover:border-vivid-blue ' : ''}` +
+		`${clickable ? 'hover:shadow-soft-glow cursor-pointer hover:border-vivid-blue dark:hover:border-vivid-blue ' : ''}` +
 		background;
 </script>
 
