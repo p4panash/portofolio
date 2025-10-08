@@ -188,24 +188,46 @@ jobs:
                               (lintRun?.conclusion === 'failure' ? '❌ Failed' :
                               (lintRun?.status === 'in_progress' || lintRun?.status === 'queued' ? '⏳ Running...' : '⚠️ Pending'));
 
+            const hasFailures = failed > 0 || lintRun?.conclusion === 'failure';
+
             const comment = `## 🔍 CI Results
 
-| Check | Status |
-|-------|--------|
-| 🧪 Playwright Tests | ${testResults} |
-| 🔧 Lint & TypeScript | ${lintStatus} |
+<table>
+  <thead>
+    <tr>
+      <th align="left">Check</th>
+      <th align="left">Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>🧪 Playwright Tests</td>
+      <td>${testResults}</td>
+    </tr>
+    <tr>
+      <td>🔧 Lint & TypeScript</td>
+      <td>${lintStatus}</td>
+    </tr>
+  </tbody>
+</table>
 
-${failed > 0 || lintRun?.conclusion === 'failure' ? '### ⚠️ Action Required\nPlease fix the failing checks before merging.\n' : ''}
+${hasFailures ? '\n> [!WARNING]\n> **Action Required:** Please fix the failing checks before merging.\n' : '\n> [!NOTE]\n> All checks passed! ✨\n'}
+
 <details>
-<summary>📊 View Test Artifacts</summary>
+<summary>📊 View Test Artifacts & Reports</summary>
 
-- **[Download Full HTML Report](${artifactUrl}#artifacts)** - \`playwright-report-merged\` artifact
-- **[Screenshots & Videos](${artifactUrl}#artifacts)** - \`playwright-screenshots-*\` artifacts
+<br>
 
-💡 To view detailed results:
-1. Download the \`playwright-report-merged\` artifact
-2. Extract and open \`index.html\` in your browser
-3. Click on failed tests to see screenshots, diffs, and traces
+**Available Downloads:**
+- 📄 [Full HTML Report](${artifactUrl}#artifacts) - Download \`playwright-report-merged\` artifact
+- 📸 [Screenshots & Videos](${artifactUrl}#artifacts) - Download \`playwright-screenshots-*\` artifacts
+
+**How to view:**
+1. Download the \`playwright-report-merged\` artifact from the link above
+2. Extract the archive
+3. Open \`index.html\` in your browser
+4. Click on any test to see screenshots, diffs, and execution traces
+
 </details>
             `;
 
