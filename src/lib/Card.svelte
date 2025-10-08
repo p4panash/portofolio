@@ -6,8 +6,9 @@
 	export let background = 'bg-light-bg dark:bg-dark-bg';
 	export let hiddenTitle = false;
 	export let clickable = false;
-	export let index = 1;
 	export let noPadding = false;
+	export let onClick = () => {};
+	export let testId = '';
 
 	let isFocused = hiddenTitle ? false : true;
 
@@ -16,31 +17,56 @@
 
 		isFocused = !isFocused;
 	};
-</script>
 
-<div
-	role="textbox"
-	tabindex={index}
-	on:mouseenter={changeFocus}
-	on:mouseleave={changeFocus}
-	class={'rounded-lg border overflow-hidden shadow-lg text-light-text dark:text-dark-text ' +
+	const handleClick = () => {
+		if (clickable && onClick) {
+			onClick();
+		}
+	};
+
+	const baseClasses =
+		'rounded-lg border border-gray-200/50 dark:border-gray-700/30 overflow-hidden shadow-lg text-light-text dark:text-dark-text ' +
 		sizeStyling +
 		' ' +
-		`${clickable ? 'hover:shadow-soft-glow cursor-pointer hover:border-vivid-blue ' : ''}` +
-		background}
->
-	<div class="{noPadding ? '' : 'p-5'} w-full h-full flex flex-col justify-end relative">
-		<slot />
-		{#if title && !hiddenTitle}
-			<h2 class="text-xl font-semibold mt-2">{title}</h2>
-		{/if}
-		{#if hiddenTitle && isFocused}
-			<div
-				class="flex items-center gap-2 absolute right-3 top-2 rounded-lg border bg-light-bg dark:bg-dark-bg py-1 px-2"
-			>
-				<span class="font-semibold whitespace-nowrap">{title}</span>
-				<NewTab size={18} />
-			</div>
-		{/if}
+		`${clickable ? 'hover:shadow-soft-glow cursor-pointer hover:border-vivid-blue dark:hover:border-vivid-blue ' : ''}` +
+		background;
+</script>
+
+{#if clickable}
+	<button
+		type="button"
+		on:mouseenter={changeFocus}
+		on:mouseleave={changeFocus}
+		on:click={handleClick}
+		class={baseClasses + ' text-left w-full'}
+		data-testid={testId}
+	>
+		<div class="{noPadding ? '' : 'p-5'} w-full h-full flex flex-col justify-end relative">
+			<slot />
+			{#if title && !hiddenTitle}
+				<h2 class="text-xl font-semibold mt-2">{title}</h2>
+			{/if}
+			{#if hiddenTitle}
+				<div
+					class="flex items-center gap-2 absolute right-4 top-4 rounded-full backdrop-blur-sm bg-white/80 dark:bg-gray-900/80 shadow-lg py-2 px-3 transition-all duration-300 z-30 {isFocused
+						? 'pr-4'
+						: ''}"
+				>
+					{#if isFocused}
+						<span class="font-semibold whitespace-nowrap text-sm">{title}</span>
+					{/if}
+					<NewTab size={16} />
+				</div>
+			{/if}
+		</div>
+	</button>
+{:else}
+	<div class={baseClasses}>
+		<div class="{noPadding ? '' : 'p-5'} w-full h-full flex flex-col justify-end relative">
+			<slot />
+			{#if title && !hiddenTitle}
+				<h2 class="text-xl font-semibold mt-2">{title}</h2>
+			{/if}
+		</div>
 	</div>
-</div>
+{/if}

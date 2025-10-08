@@ -106,7 +106,8 @@
 
 		<!-- Dots Indicators -->
 		<div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
-			{#each images as _, index}
+			<!-- eslint-disable-next-line @typescript-eslint/no-unused-vars -->
+			{#each images as _image, index (index)}
 				<button
 					on:click={() => goToSlide(index)}
 					class="w-2 h-2 rounded-full transition-all {currentIndex === index

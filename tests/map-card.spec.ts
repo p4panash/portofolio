@@ -329,6 +329,7 @@ test.describe('MapCard Component', () => {
 
 			// Zoom back in
 			await mapHelper.clickZoomIn();
+			await page.waitForTimeout(100);
 
 			// Back to start: zoom in disabled, zoom out enabled
 			expect(await mapHelper.isZoomInDisabled()).toBe(true);
