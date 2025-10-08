@@ -187,7 +187,9 @@ export class ProjectModalHelper {
 	 * Check if a specific heading exists in the content
 	 */
 	async hasHeading(text: string): Promise<boolean> {
-		const heading = this.modalContent.locator(`h1:has-text("${text}"), h2:has-text("${text}"), h3:has-text("${text}")`);
+		const heading = this.modalContent.locator(
+			`h1:has-text("${text}"), h2:has-text("${text}"), h3:has-text("${text}")`
+		);
 		return await heading.isVisible();
 	}
 

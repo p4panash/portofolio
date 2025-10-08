@@ -143,7 +143,6 @@ test.describe('ProjectModal Component', () => {
 		});
 	});
 
-
 	test.describe('Accessibility', () => {
 		test('should have proper ARIA attributes', async ({ page }) => {
 			const modal = getProjectModalHelper(page);

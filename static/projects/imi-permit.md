@@ -17,17 +17,20 @@ A comprehensive platform for managing immigration permits with a modern frontend
 ## Tech Stack
 
 ### Frontend
+
 - **Next.js**: React framework for production
 - **i18next**: Internationalization framework
 - **Jest**: Testing framework
 
 ### Backend
+
 - **Ruby on Rails**: Web application framework
 - **Sidekiq**: Background job processing
 - **Redis**: In-memory data store
 - **PostgreSQL**: Relational database
 
 ### DevOps
+
 - **GitHub CI**: Continuous integration
 - **Vercel**: Frontend hosting
 - **Dokku**: Backend deployment

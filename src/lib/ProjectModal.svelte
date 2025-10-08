@@ -105,6 +105,7 @@
 					</div>
 				{:else}
 					<div class="prose prose-slate dark:prose-invert max-w-none text-left">
+						<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 						{@html htmlContent}
 					</div>
 				{/if}

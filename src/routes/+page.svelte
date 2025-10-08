@@ -27,11 +27,20 @@
 	class="container min-h-[95vh] mx-auto grid gap-3 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 grid-rows-5"
 >
 	<ProfileCard sizeStyling="lg:col-span-2 lg:row-span-2" />
-	<ThisBeautyCard sizeStyling="lg:col-span-1 lg:row-span-2" onClick={() => openProjectModal('This Beauty')} />
-	<MangaAppCard sizeStyling="lg:col-span-1 lg:row-span-2" onClick={() => openProjectModal('Manga App')} />
+	<ThisBeautyCard
+		sizeStyling="lg:col-span-1 lg:row-span-2"
+		onClick={() => openProjectModal('This Beauty')}
+	/>
+	<MangaAppCard
+		sizeStyling="lg:col-span-1 lg:row-span-2"
+		onClick={() => openProjectModal('Manga App')}
+	/>
 	<TechStackCard sizeStyling="lg:col-span-1 lg:row-span-1" />
 	<PhotosCard sizeStyling="lg:col-span-1 lg:row-span-2" />
-	<ImiPermitCard sizeStyling="lg:col-span-2 lg:row-span-3" onClick={() => openProjectModal('Imi Permit')} />
+	<ImiPermitCard
+		sizeStyling="lg:col-span-2 lg:row-span-3"
+		onClick={() => openProjectModal('Imi Permit')}
+	/>
 	<MapCard sizeStyling="lg:col-span-1 lg:row-span-2" />
 	<ContactCard sizeStyling="lg:col-span-1 lg:row-span-1" />
 </div>

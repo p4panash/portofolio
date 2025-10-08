@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import { icons } from './constants';
 
 	export let name = '';
@@ -9,7 +9,7 @@
 
 	let isExpanded = false;
 
-	const expand = (e) => {
+	const expand = (e: MouseEvent) => {
 		if (!isExpandable) return;
 
 		e.stopPropagation();
