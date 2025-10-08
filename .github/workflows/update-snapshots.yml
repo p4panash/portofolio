@@ -76,6 +76,11 @@ jobs:
           PUBLIC_MAPBOX_TOKEN: ${{ secrets.PUBLIC_MAPBOX_TOKEN }}
         run: pnpm run build
 
+      - name: Clean any existing changes before snapshot update
+        run: |
+          git reset --hard HEAD
+          git clean -fd
+
       - name: Update snapshots
         run: pnpm exec playwright test --project=chromium --update-snapshots || true
 
@@ -88,14 +93,18 @@ jobs:
             echo "No snapshot changes detected"
             echo "HAS_CHANGES=false" >> $GITHUB_ENV
           else
-            git commit -m "Update Playwright snapshots from CI
+            # Amend the previous snapshot commit if it exists, otherwise create new
+            if git log -1 --pretty=%B | grep -q "Update Playwright snapshots from CI"; then
+              git commit --amend --no-edit
+              git push --force-with-lease
+            else
+              git commit -m "Update Playwright snapshots from CI
 
           Triggered by: ${{ github.event.comment.user.login }}
 
           🤖 Generated with [Claude Code](https://claude.com/claude-code)"
-            # Pull with rebase in case branch was updated
-            git pull --rebase origin ${{ steps.pr-branch.outputs.ref }}
-            git push
+              git push
+            fi
             echo "HAS_CHANGES=true" >> $GITHUB_ENV
           fi
 
