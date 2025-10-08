@@ -36,6 +36,8 @@ jobs:
         run: pnpm run lint
 
       - name: Run TypeScript check
+        env:
+          PUBLIC_MAPBOX_TOKEN: ${{ secrets.PUBLIC_MAPBOX_TOKEN }}
         run: pnpm run check
 
       - name: Comment PR with results
