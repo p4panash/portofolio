@@ -14,8 +14,7 @@ jobs:
     if: github.event.issue.pull_request && contains(github.event.comment.body, '/update-snapshots')
     runs-on: ubuntu-latest
     steps:
-      - name: React to comment and create check run
-        id: create-check
+      - name: React to comment
         uses: actions/github-script@v7
         with:
           script: |
@@ -26,30 +25,6 @@ jobs:
               comment_id: context.payload.comment.id,
               content: 'rocket'
             });
-
-            // Get PR details
-            const pr = await github.rest.pulls.get({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              pull_number: context.issue.number
-            });
-
-            // Create a check run
-            const check = await github.rest.checks.create({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              name: 'Update Snapshots',
-              head_sha: pr.data.head.sha,
-              status: 'in_progress',
-              started_at: new Date().toISOString(),
-              output: {
-                title: 'Updating Playwright Snapshots',
-                summary: 'Running tests with --update-snapshots flag...'
-              }
-            });
-
-            core.setOutput('check_id', check.data.id);
-            core.setOutput('pr_sha', pr.data.head.sha);
 
             // Post initial comment with workflow link
             const runUrl = `https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
@@ -124,32 +99,16 @@ jobs:
             echo "HAS_CHANGES=true" >> $GITHUB_ENV
           fi
 
-      - name: Update check run and comment on PR
+      - name: Comment on PR with results
         if: always()
         uses: actions/github-script@v7
         with:
           script: |
             const hasChanges = process.env.HAS_CHANGES === 'true';
-            const checkId = '${{ steps.create-check.outputs.check_id }}';
-            const prSha = '${{ steps.create-check.outputs.pr_sha }}';
 
             const message = hasChanges
               ? '✅ Snapshots have been updated and committed to this PR!'
               : 'ℹ️ No snapshot changes were needed.';
-
-            // Update check run status
-            await github.rest.checks.update({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              check_run_id: checkId,
-              status: 'completed',
-              conclusion: 'success',
-              completed_at: new Date().toISOString(),
-              output: {
-                title: hasChanges ? 'Snapshots Updated' : 'No Changes Needed',
-                summary: message
-              }
-            });
 
             // Comment on PR
             await github.rest.issues.createComment({

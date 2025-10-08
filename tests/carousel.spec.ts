@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from './coverage';
 import { getCarouselHelper } from './helpers/carousel-helpers';
 import { getThemeHelper } from './helpers/theme-helpers';
 

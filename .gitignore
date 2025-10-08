@@ -28,3 +28,8 @@ vite.config.ts.timestamp-*
 # Only ignore actual/diff images from test runs
 /tests/**/*-actual.png
 /tests/**/*-diff.png
+
+# Code coverage
+.nyc_output/
+coverage/
+blob-report/
