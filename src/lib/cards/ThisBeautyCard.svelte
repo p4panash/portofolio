@@ -13,6 +13,7 @@
 	{sizeStyling}
 	{onClick}
 	background="bg-gradient-to-br from-violet-200/80 to-fuchsia-200/80 dark:from-violet-900/40 dark:to-fuchsia-900/40"
+	testId="project-card-this-beauty"
 >
 	<!-- Decorative shapes -->
 	<div class="absolute inset-0 overflow-hidden pointer-events-none">

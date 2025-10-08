@@ -13,6 +13,7 @@
 	{sizeStyling}
 	{onClick}
 	background="bg-gradient-to-br from-pink-200/80 to-indigo-200/80 dark:from-pink-900/40 dark:to-indigo-900/40"
+	testId="project-card-imi-permit"
 >
 	<!-- Decorative shapes -->
 	<div class="absolute inset-0 overflow-hidden pointer-events-none">

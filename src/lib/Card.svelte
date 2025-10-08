@@ -8,6 +8,7 @@
 	export let clickable = false;
 	export let noPadding = false;
 	export let onClick = () => {};
+	export let testId = '';
 
 	let isFocused = hiddenTitle ? false : true;
 
@@ -37,6 +38,7 @@
 		on:mouseleave={changeFocus}
 		on:click={handleClick}
 		class={baseClasses + ' text-left w-full'}
+		data-testid={testId}
 	>
 		<div class="{noPadding ? '' : 'p-5'} w-full h-full flex flex-col justify-end relative">
 			<slot />

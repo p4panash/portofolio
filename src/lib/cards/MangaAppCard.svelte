@@ -13,6 +13,7 @@
 	{sizeStyling}
 	{onClick}
 	background="bg-gradient-to-br from-rose-200/80 to-purple-200/80 dark:from-rose-900/40 dark:to-purple-900/40"
+	testId="project-card-manga-app"
 >
 	<!-- Decorative shapes -->
 	<div class="absolute inset-0 overflow-hidden pointer-events-none">
