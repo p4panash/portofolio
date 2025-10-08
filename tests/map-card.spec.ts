@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from './coverage';
 import { getMapCardHelper } from './helpers/map-helpers';
 
 test.describe('MapCard Component', () => {

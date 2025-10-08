@@ -72,6 +72,14 @@ jobs:
           path: blob-report/
           retention-days: 30
 
+      - name: Upload coverage data
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: coverage-${{ matrix.shard }}
+          path: .nyc_output/
+          retention-days: 30
+
       - name: Upload screenshots and videos
         uses: actions/upload-artifact@v4
         if: failure()
@@ -168,3 +176,96 @@ jobs:
               repo: repo.repo,
               body: comment
             });
+
+  # Generate code coverage report (only on main branch)
+  coverage-report:
+    if: always() && github.ref == 'refs/heads/main'
+    needs: [test]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Download all coverage reports
+        uses: actions/download-artifact@v4
+        with:
+          path: all-coverage/
+          pattern: coverage-*
+
+      - name: Merge coverage reports
+        run: |
+          # Create .nyc_output directory
+          mkdir -p .nyc_output
+
+          # Copy all coverage files to .nyc_output
+          for coverage_dir in all-coverage/coverage-*; do
+            if [ -d "$coverage_dir" ]; then
+              cp "$coverage_dir"/*.json .nyc_output/ 2>/dev/null || true
+            fi
+          done
+
+          # Generate coverage report
+          pnpm exec nyc report --reporter=lcov --reporter=text --reporter=json-summary
+
+          # Display coverage summary
+          if [ -f coverage/coverage-summary.json ]; then
+            cat coverage/coverage-summary.json
+          fi
+
+      - name: Create coverage badge
+        run: |
+          # Extract coverage percentage
+          COVERAGE=$(node -e "const data = require('./coverage/coverage-summary.json'); console.log(data.total.lines.pct.toFixed(2));")
+          echo "Coverage: $COVERAGE%"
+
+          # Determine badge color
+          if (( $(echo "$COVERAGE >= 80" | bc -l) )); then
+            COLOR="brightgreen"
+          elif (( $(echo "$COVERAGE >= 60" | bc -l) )); then
+            COLOR="yellow"
+          else
+            COLOR="red"
+          fi
+
+          # Create coverage badge JSON for shields.io endpoint
+          mkdir -p .github/badges
+          cat > .github/badges/coverage.json <<EOF
+          {
+            "schemaVersion": 1,
+            "label": "coverage",
+            "message": "${COVERAGE}%",
+            "color": "${COLOR}"
+          }
+          EOF
+
+          cat .github/badges/coverage.json
+
+      - name: Commit coverage badge
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add .github/badges/coverage.json
+          git diff --staged --quiet || git commit -m "Update coverage badge [skip ci]"
+          git push || echo "No changes to push"
+
+      - name: Upload coverage report artifact
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: coverage-report
+          path: coverage/
+          retention-days: 30
