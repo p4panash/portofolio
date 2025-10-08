@@ -361,4 +361,50 @@ test.describe('ProjectModal Component', () => {
 			await expect(icon).toBeVisible();
 		});
 	});
+
+	test.describe('Visual Regression', () => {
+		test('should match modal screenshot in light mode', async ({ page }) => {
+			const modal = getProjectModalHelper(page);
+
+			await modal.openProjectByTitle('This Beauty');
+			await modal.waitForContentLoad();
+
+			// Take screenshot of the modal
+			await expect(modal.modal).toHaveScreenshot('project-modal-light-mode.png', {
+				maxDiffPixels: 100
+			});
+		});
+
+		test('should match modal screenshot in dark mode', async ({ page }) => {
+			const modal = getProjectModalHelper(page);
+			const theme = getThemeHelper(page);
+
+			await theme.toggleDarkMode();
+			await modal.openProjectByTitle('This Beauty');
+			await modal.waitForContentLoad();
+
+			// Take screenshot of the modal in dark mode
+			await expect(modal.modal).toHaveScreenshot('project-modal-dark-mode.png', {
+				maxDiffPixels: 100
+			});
+		});
+
+		test('should match close button screenshot', async ({ page }) => {
+			const modal = getProjectModalHelper(page);
+
+			await modal.openProjectByTitle('This Beauty');
+			await modal.waitForContentLoad();
+
+			// Hover over close button
+			await modal.closeButton.hover();
+
+			// Take screenshot of close button with hover state
+			await expect(modal.closeButton).toHaveScreenshot('project-modal-close-button-hover.png');
+		});
+
+		// TODO: Add visual tests for specific project content once final versions are ready
+		// - Modal with This Beauty content
+		// - Modal with Manga App content
+		// - Modal with Imi Permit content
+	});
 });
