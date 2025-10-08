@@ -13,7 +13,8 @@ import {
 	SiGithub,
 	SiVercel,
 	SiI18next,
-	SiRedux
+	SiRedux,
+	SiClaude
 } from '@icons-pack/svelte-simple-icons';
 import DokkuLogo from './svgs/DokkuLogo.svelte';
 import type { ComponentType } from 'svelte';
@@ -49,5 +50,9 @@ export const icons: Map<string, IconData> = new Map([
 	['vercel', [SiVercel, '#000000', 'bg-gradient-to-r from-black via-gray-800 to-gray-700']],
 	['i18next', [SiI18next, '#26A69A', 'bg-gradient-to-r from-black via-gray-800 to-gray-700']],
 	['dokku', [DokkuLogo, null, 'bg-gradient-to-r from-black via-gray-800 to-gray-700']],
-	['redux', [SiRedux, '#764ABC', '']]
+	['redux', [SiRedux, '#764ABC', '']],
+	[
+		'claude code',
+		[SiClaude, '#D97757', 'bg-gradient-to-r from-orange-400 via-amber-500 to-orange-600']
+	]
 ]);
