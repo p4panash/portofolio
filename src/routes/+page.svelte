@@ -35,7 +35,10 @@
 		sizeStyling="lg:col-span-1 lg:row-span-2"
 		onClick={() => openProjectModal('Manga App')}
 	/>
-	<TechStackCard sizeStyling="lg:col-span-1 lg:row-span-1" />
+	<TechStackCard
+		sizeStyling="lg:col-span-1 lg:row-span-1"
+		onClick={() => openProjectModal('Tech Stack')}
+	/>
 	<PhotosCard sizeStyling="lg:col-span-1 lg:row-span-2" />
 	<ImiPermitCard
 		sizeStyling="lg:col-span-2 lg:row-span-3"

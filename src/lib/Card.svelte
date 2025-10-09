@@ -44,7 +44,7 @@
 		<div class="{noPadding ? '' : 'p-5'} w-full h-full flex flex-col relative">
 			{#if title && !hiddenTitle}
 				<h2
-					class="text-sm font-semibold mb-3 text-light-secondary dark:text-dark-secondary uppercase tracking-wider"
+					class="text-sm font-semibold mb-2 text-light-secondary dark:text-dark-secondary uppercase tracking-wider"
 				>
 					{title}
 				</h2>
@@ -71,7 +71,7 @@
 		<div class="{noPadding ? '' : 'p-5'} w-full h-full flex flex-col relative">
 			{#if title && !hiddenTitle}
 				<h2
-					class="text-sm font-semibold mb-3 text-light-secondary dark:text-dark-secondary uppercase tracking-wider"
+					class="text-sm font-semibold mb-2 text-light-secondary dark:text-dark-secondary uppercase tracking-wider"
 				>
 					{title}
 				</h2>
