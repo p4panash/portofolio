@@ -70,7 +70,7 @@
 		map = new mapboxgl.Map({
 			container: mapContainer,
 			style: 'mapbox://styles/mapbox/standard',
-			center: [23.6, 46.76],
+			center: [23.6, 46.77],
 			zoom: INITIAL_ZOOM,
 			minZoom: MIN_ZOOM,
 			maxZoom: INITIAL_ZOOM,
