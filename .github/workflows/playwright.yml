@@ -60,9 +60,12 @@ jobs:
       - name: Build application
         env:
           PUBLIC_MAPBOX_TOKEN: ${{ secrets.PUBLIC_MAPBOX_TOKEN }}
+          CI: true
         run: pnpm run build
 
       - name: Run Playwright tests (shard ${{ matrix.shard }}/3)
+        env:
+          CI: true
         run: pnpm exec playwright test --project=chromium --shard=${{ matrix.shard }}/3
 
       - name: Upload blob report

@@ -4,7 +4,9 @@ import istanbul from 'vite-plugin-istanbul';
 
 export default defineConfig({
 	build: {
-		sourcemap: true
+		sourcemap: true,
+		// Disable minification in CI to preserve coverage instrumentation
+		minify: process.env.CI ? false : 'esbuild'
 	},
 	plugins: [
 		sveltekit(),
