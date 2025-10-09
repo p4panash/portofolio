@@ -70,7 +70,7 @@
 		map = new mapboxgl.Map({
 			container: mapContainer,
 			style: 'mapbox://styles/mapbox/standard',
-			center: [23.6, 46.76],
+			center: [23.6, 46.77],
 			zoom: INITIAL_ZOOM,
 			minZoom: MIN_ZOOM,
 			maxZoom: INITIAL_ZOOM,
@@ -132,7 +132,7 @@
 
 <Card {sizeStyling} noPadding>
 	<div class="relative w-full h-full rounded-lg overflow-hidden min-h-[200px]">
-		<div bind:this={mapContainer} class="w-full h-full" />
+		<div bind:this={mapContainer} class="w-full h-full min-h-[200px]" />
 
 		<!-- Zoom Controls -->
 		<div class="absolute top-3 right-3 flex flex-col gap-2">

@@ -1,6 +1,7 @@
 <script>
 	import Card from '$lib/Card.svelte';
 	import Badge from '$lib/Badge.svelte';
+	import OptimizedImage from '$lib/OptimizedImage.svelte';
 
 	export let sizeStyling = '';
 	export let onClick = () => {};
@@ -30,10 +31,12 @@
 	<div
 		class="absolute -top-20 -right-20 w-[130%] h-[130%] flex items-start justify-end pointer-events-none overflow-visible z-10"
 	>
-		<img
+		<OptimizedImage
 			src="/images/projects/this-beauty.png"
 			alt="This Beauty Screenshot"
-			class="w-full h-full object-contain transform rotate-12 transition-transform duration-300 rounded-xl"
+			width={800}
+			height={600}
+			className="w-full h-full object-contain transform rotate-12 transition-transform duration-300 rounded-xl"
 		/>
 	</div>
 	<div class="flex gap-1 relative z-20">

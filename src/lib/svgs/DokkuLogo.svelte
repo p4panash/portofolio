@@ -1,9 +1,12 @@
 <script lang="ts">
 	export let color = 'none';
 	export let size = 24;
+
+	// Calculate width to maintain aspect ratio (89:62)
+	$: width = Math.round((size * 89) / 62);
 </script>
 
-<svg width="auto" height={size} viewBox="0 0 89 62" fill={color} xmlns="http://www.w3.org/2000/svg">
+<svg {width} height={size} viewBox="0 0 89 62" fill={color} xmlns="http://www.w3.org/2000/svg">
 	<path
 		d="M78.4046 17.1912C84.738 21.1608 86.2188 20.7419 87.6794 19.9955C88.5202 19.5664 88.8496 18.5392 88.4243 17.6985C86.4622 13.818 78.212 0.118992 59.5364 0.118992C43.8588 0.118992 34.4377 13.3435 31.5684 18.0766C31.0067 19.0027 31.4447 20.2158 32.4755 20.5543C34.1357 21.0995 35.9508 21.216 39.8333 18.8625C52.5306 11.8038 78.4046 17.1912 78.4046 17.1912Z"
 		fill="#F15B55"

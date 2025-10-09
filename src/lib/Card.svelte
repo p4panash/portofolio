@@ -41,11 +41,17 @@
 		class={baseClasses + ' text-left w-full'}
 		data-testid={testId}
 	>
-		<div class="{noPadding ? '' : 'p-5'} w-full h-full flex flex-col justify-end relative">
-			<slot />
+		<div class="{noPadding ? '' : 'p-5'} w-full h-full flex flex-col relative">
 			{#if title && !hiddenTitle}
-				<h2 class="text-xl font-semibold mt-2">{title}</h2>
+				<h2
+					class="text-sm font-semibold mb-2 text-light-secondary dark:text-dark-secondary uppercase tracking-wider"
+				>
+					{title}
+				</h2>
 			{/if}
+			<div class="flex-1 flex flex-col justify-end">
+				<slot />
+			</div>
 			{#if hiddenTitle}
 				<div
 					class="flex items-center gap-2 absolute right-4 top-4 rounded-full backdrop-blur-sm bg-white/80 dark:bg-gray-900/80 shadow-lg py-2 px-3 transition-all duration-300 z-30 {isFocused
@@ -62,11 +68,17 @@
 	</button>
 {:else}
 	<div class={baseClasses}>
-		<div class="{noPadding ? '' : 'p-5'} w-full h-full flex flex-col justify-end relative">
-			<slot />
+		<div class="{noPadding ? '' : 'p-5'} w-full h-full flex flex-col relative">
 			{#if title && !hiddenTitle}
-				<h2 class="text-xl font-semibold mt-2">{title}</h2>
+				<h2
+					class="text-sm font-semibold mb-2 text-light-secondary dark:text-dark-secondary uppercase tracking-wider"
+				>
+					{title}
+				</h2>
 			{/if}
+			<div class="flex-1 flex flex-col justify-end">
+				<slot />
+			</div>
 		</div>
 	</div>
 {/if}

@@ -1,30 +1,53 @@
 <script>
 	import Card from '$lib/Card.svelte';
+	import InfoBadge from '$lib/InfoBadge.svelte';
+	import DownloadIcon from '$lib/svgs/DownloadIcon.svelte';
+	import OptimizedImage from '$lib/OptimizedImage.svelte';
 
 	export let sizeStyling = '';
 </script>
 
-<Card {sizeStyling} clickable={true}>
-	<div class="h-full flex flex-col justify-between">
-		<div class="flex justify-between">
-			<div class="flex">
-				<img
-					alt="avatar"
-					src="https://avatars.githubusercontent.com/u/30667314?v=4"
-					class="w-24 h-24 rounded-full border"
-				/>
-				<span class="ml-2 text-xl font-semibold self-end">Cătălin Muntean</span>
-			</div>
-			<div class="self-end">
-				<span>Download Resume</span>
+<Card {sizeStyling}>
+	<div class="h-full flex flex-col gap-8">
+		<div class="flex items-center gap-4">
+			<OptimizedImage
+				alt="Cătălin Muntean"
+				src="https://avatars.githubusercontent.com/u/30667314?v=4"
+				width={80}
+				height={80}
+				loading="eager"
+				fetchpriority="high"
+				className="w-20 h-20 rounded-full border-2 border-gray-200 dark:border-gray-700 shadow-md"
+			/>
+			<div class="flex flex-col flex-1">
+				<h3 class="text-2xl font-bold text-light-text dark:text-dark-text">Cătălin Muntean</h3>
+				<div class="flex items-center justify-between">
+					<p class="text-base text-light-secondary dark:text-dark-secondary">
+						Full-Stack Developer
+					</p>
+					<a
+						href="/resume.pdf"
+						download
+						class="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm rounded-full shadow-lg hover:shadow-xl whitespace-nowrap transition-all duration-200"
+						on:click={(e) => e.stopPropagation()}
+					>
+						<span>Resume</span>
+						<DownloadIcon size={12} />
+					</a>
+				</div>
 			</div>
 		</div>
-		<div>
-			<p>
-				Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam semper felis vitae arcu
-				hendrerit rutrum. Phasellus efficitur vulputate auctor. Maecenas ultricies tellus vitae
-				eleifend sodales. Etiam justo sapien, eleifend a suscipit at, gravida sit amet quam.
+
+		<div class="flex flex-col gap-3">
+			<p class="text-base text-light-text dark:text-dark-text leading-relaxed">
+				Full-stack developer specializing in building scalable web applications with Ruby on Rails
+				and React. Passionate about clean code, user experience, and continuous learning.
 			</p>
+			<div class="flex flex-wrap gap-1">
+				<InfoBadge text="5+ years experience" />
+				<InfoBadge text="Remote ready" />
+				<InfoBadge text="Open to opportunities" />
+			</div>
 		</div>
 	</div>
 </Card>
