@@ -27,7 +27,7 @@
 </script>
 
 <button
-	class={'cursor-pointer rounded shadow flex p-1 justify-center' +
+	class={'cursor-pointer rounded shadow flex p-1 justify-center bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm ' +
 		(gradientBackground ? background : '')}
 	on:click={expand}
 >
