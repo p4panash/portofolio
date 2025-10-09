@@ -104,8 +104,6 @@ jobs:
               git commit -m "Update Playwright snapshots from CI
 
           Triggered by: ${{ github.event.comment.user.login }}
-
-          🤖 Generated with [Claude Code](https://claude.com/claude-code)"
               git push
             fi
             echo "HAS_CHANGES=true" >> $GITHUB_ENV
