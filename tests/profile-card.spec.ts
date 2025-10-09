@@ -13,7 +13,7 @@ test.describe('ProfileCard Component', () => {
 		});
 
 		test('should display subtitle "Full-Stack Developer"', async ({ page }) => {
-			const subtitleElement = page.locator('text=Full-Stack Developer');
+			const subtitleElement = page.locator('p:has-text("Full-Stack Developer")').first();
 			await expect(subtitleElement).toBeVisible();
 		});
 
@@ -118,8 +118,10 @@ test.describe('ProfileCard Component', () => {
 	test.describe('Layout', () => {
 		test('should have correct grid sizing', async ({ page }) => {
 			// ProfileCard should span 2 columns and 2 rows on large screens
-			const profileCard = page.locator('img[alt="Cătălin Muntean"]').locator('../..');
-			const cardRoot = profileCard.locator('../..');
+			// Find the div that contains the ProfileCard with the grid sizing
+			const cardRoot = page
+				.locator('img[alt="Cătălin Muntean"]')
+				.locator('xpath=ancestor::*[contains(@class, "lg:col-span")]');
 
 			// Check if the card has the correct sizing classes
 			await expect(cardRoot).toHaveClass(/lg:col-span-2/);
@@ -127,7 +129,10 @@ test.describe('ProfileCard Component', () => {
 		});
 
 		test('should have proper spacing between elements', async ({ page }) => {
-			const container = page.locator('img[alt="Cătălin Muntean"]').locator('..');
+			// The gap-8 is on the outer flex container
+			const container = page
+				.locator('img[alt="Cătălin Muntean"]')
+				.locator('xpath=ancestor::*[contains(@class, "gap-8")]');
 			await expect(container).toHaveClass(/gap-8/);
 		});
 	});

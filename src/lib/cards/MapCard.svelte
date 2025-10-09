@@ -132,7 +132,7 @@
 
 <Card {sizeStyling} noPadding>
 	<div class="relative w-full h-full rounded-lg overflow-hidden min-h-[200px]">
-		<div bind:this={mapContainer} class="w-full h-full" />
+		<div bind:this={mapContainer} class="w-full h-full min-h-[200px]" />
 
 		<!-- Zoom Controls -->
 		<div class="absolute top-3 right-3 flex flex-col gap-2">

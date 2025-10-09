@@ -115,8 +115,9 @@ test.describe('TechStackCard Component', () => {
 			await card.click();
 			await page.waitForTimeout(500);
 
-			// Check for some expected content
-			const content = page.locator('text=Ruby on Rails');
+			// Check for some expected content within the modal
+			const modal = page.locator('[role="dialog"]');
+			const content = modal.locator('h3:has-text("Ruby on Rails")');
 			await expect(content).toBeVisible();
 		});
 

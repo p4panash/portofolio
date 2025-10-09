@@ -1,4 +1,6 @@
 <script lang="ts">
+	import OptimizedImage from '$lib/OptimizedImage.svelte';
+
 	export let images: string[] = [];
 	export let autoPlayInterval: number = 5000; // 5 seconds default
 
@@ -79,7 +81,14 @@
 					: 'opacity-0'} cursor-pointer"
 				aria-label="Expand image"
 			>
-				<img src={image} alt="Carousel slide {index + 1}" class="w-full h-full object-cover" />
+				<OptimizedImage
+					src={image}
+					alt="Carousel slide {index + 1}"
+					width={800}
+					height={600}
+					loading={index === 0 ? 'eager' : 'lazy'}
+					className="w-full h-full object-cover"
+				/>
 			</button>
 		{/each}
 	</div>

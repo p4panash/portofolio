@@ -2,6 +2,7 @@
 	import Card from '$lib/Card.svelte';
 	import InfoBadge from '$lib/InfoBadge.svelte';
 	import DownloadIcon from '$lib/svgs/DownloadIcon.svelte';
+	import OptimizedImage from '$lib/OptimizedImage.svelte';
 
 	export let sizeStyling = '';
 </script>
@@ -9,10 +10,14 @@
 <Card {sizeStyling}>
 	<div class="h-full flex flex-col gap-8">
 		<div class="flex items-center gap-4">
-			<img
+			<OptimizedImage
 				alt="Cătălin Muntean"
 				src="https://avatars.githubusercontent.com/u/30667314?v=4"
-				class="w-20 h-20 rounded-full border-2 border-gray-200 dark:border-gray-700 shadow-md"
+				width={80}
+				height={80}
+				loading="eager"
+				fetchpriority="high"
+				className="w-20 h-20 rounded-full border-2 border-gray-200 dark:border-gray-700 shadow-md"
 			/>
 			<div class="flex flex-col flex-1">
 				<h3 class="text-2xl font-bold text-light-text dark:text-dark-text">Cătălin Muntean</h3>
