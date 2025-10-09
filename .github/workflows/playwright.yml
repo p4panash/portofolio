@@ -80,15 +80,16 @@ jobs:
           name: coverage-${{ matrix.shard }}
           path: .nyc_output/
           retention-days: 30
+          if-no-files-found: ignore
 
       - name: Upload screenshots and videos
         uses: actions/upload-artifact@v4
         if: failure()
         with:
           name: playwright-screenshots-${{ matrix.shard }}
-          path: |
-            test-results/
+          path: test-results/
           retention-days: 30
+          if-no-files-found: ignore
 
   # Merge reports from all shards into a single report
   merge-reports:
@@ -116,23 +117,17 @@ jobs:
       - name: Download all blob reports
         uses: actions/download-artifact@v4
         with:
-          path: all-blob-reports/
+          path: blob-report/
           pattern: blob-report-*
           merge-multiple: true
 
       - name: Merge reports into HTML and JSON
         run: |
-          # Merge all blob reports - each artifact is in its own subdirectory
-          mkdir -p merged-blob-reports
-          for report in all-blob-reports/blob-report-*/report-*.zip; do
-            cp "$report" merged-blob-reports/
-          done
-
           # Merge with HTML reporter (creates playwright-report/)
-          pnpm exec playwright merge-reports --reporter html ./merged-blob-reports
+          pnpm exec playwright merge-reports --reporter html ./blob-report
 
           # Also generate JSON report
-          pnpm exec playwright merge-reports --reporter json ./merged-blob-reports > playwright-report/results.json
+          pnpm exec playwright merge-reports --reporter json ./blob-report > playwright-report/results.json
 
           # Verify output
           echo "Merged report contents:"
@@ -182,23 +177,13 @@ jobs:
       - name: Download all coverage reports
         uses: actions/download-artifact@v4
         with:
-          path: all-coverage/
+          path: .nyc_output/
           pattern: coverage-*
           merge-multiple: true
 
       - name: Merge coverage reports
         run: |
-          # Create .nyc_output directory
-          mkdir -p .nyc_output
-
-          # Copy all coverage files to .nyc_output
-          for coverage_dir in all-coverage/coverage-*; do
-            if [ -d "$coverage_dir" ]; then
-              cp "$coverage_dir"/*.json .nyc_output/ 2>/dev/null || true
-            fi
-          done
-
-          # Generate coverage report
+          # Generate coverage report from merged .nyc_output
           pnpm exec nyc report --reporter=lcov --reporter=text --reporter=json-summary
 
           # Display coverage summary

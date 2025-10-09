@@ -8,18 +8,19 @@ module.exports = async ({ github, context, fs }) => {
 
 	// Read test results
 	let testResults = '';
+	let failed = 0;
 	try {
 		const results = JSON.parse(fs.readFileSync('playwright-report/results.json', 'utf8'));
 		const stats = results.stats;
 		const passed = stats.expected || 0;
-		const failed = stats.unexpected || 0;
+		failed = stats.unexpected || 0;
 		const flaky = stats.flaky || 0;
 		const skipped = stats.skipped || 0;
 		const total = passed + failed + flaky + skipped;
 
 		const testEmoji = failed > 0 ? '❌' : flaky > 0 ? '⚠️' : '✅';
 		testResults = `${testEmoji} **${passed}/${total} passed** ${failed > 0 ? `| ${failed} failed` : ''} ${flaky > 0 ? `| ${flaky} flaky` : ''}`;
-	} catch (e) {
+	} catch {
 		testResults = '⚠️ Test results unavailable';
 	}
 
@@ -37,14 +38,17 @@ module.exports = async ({ github, context, fs }) => {
 			run.name === 'Lint and TypeScript Check'
 	);
 
-	const lintStatus =
-		lintRun?.conclusion === 'success'
-			? '✅ Passed'
-			: lintRun?.conclusion === 'failure'
-				? '❌ Failed'
-				: lintRun?.status === 'in_progress' || lintRun?.status === 'queued'
-					? '⏳ Running...'
-					: '⚠️ Pending';
+	// Determine lint status
+	let lintStatus = '⚠️ Pending';
+	if (lintRun) {
+		if (lintRun.conclusion === 'success') {
+			lintStatus = '✅ Passed';
+		} else if (lintRun.conclusion === 'failure') {
+			lintStatus = '❌ Failed';
+		} else if (lintRun.status === 'in_progress' || lintRun.status === 'queued') {
+			lintStatus = '⏳ Running...';
+		}
+	}
 
 	const hasFailures = failed > 0 || lintRun?.conclusion === 'failure';
 
