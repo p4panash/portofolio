@@ -71,18 +71,22 @@ jobs:
       - name: Debug coverage output
         if: always()
         run: |
+          echo "=== SHARD ${{ matrix.shard }} DEBUG ==="
           echo "Current directory:"
           pwd
+          echo -e "\nAll directories:"
+          ls -la
           echo -e "\nChecking for .nyc_output directory:"
-          ls -la | grep nyc || echo ".nyc_output not found in current directory"
-          echo -e "\nContents of .nyc_output (if exists):"
-          ls -la .nyc_output/ 2>/dev/null || echo "Directory does not exist or is empty"
-          echo -e "\nFile count in .nyc_output:"
-          find .nyc_output/ -type f | wc -l
-          echo -e "\nSearching for coverage files:"
-          find . -name "*coverage*.json" -type f 2>/dev/null || echo "No coverage files found"
-          echo -e "\nTesting read permissions:"
-          test -r .nyc_output/ && echo ".nyc_output is readable" || echo ".nyc_output is NOT readable"
+          if [ -d .nyc_output ]; then
+            echo ".nyc_output EXISTS"
+            echo "Contents:"
+            ls -la .nyc_output/
+            echo "File count: $(find .nyc_output/ -type f | wc -l)"
+          else
+            echo ".nyc_output DOES NOT EXIST"
+          fi
+          echo -e "\nSearching entire workspace for coverage files:"
+          find . -name "playwright_coverage_*.json" -type f 2>/dev/null | head -5
 
       - name: Upload blob report
         uses: actions/upload-artifact@v4
@@ -91,6 +95,14 @@ jobs:
           name: blob-report-${{ matrix.shard }}
           path: blob-report/
           retention-days: 30
+
+      - name: Debug before coverage upload
+        if: always()
+        run: |
+          echo "RIGHT BEFORE UPLOAD:"
+          pwd
+          ls -la .nyc_output/ 2>/dev/null || echo ".nyc_output not found"
+          find .nyc_output/ -type f 2>/dev/null | wc -l || echo "Can't count files"
 
       - name: Upload coverage data
         uses: actions/upload-artifact@v4
