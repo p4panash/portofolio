@@ -77,8 +77,12 @@ jobs:
           ls -la | grep nyc || echo ".nyc_output not found in current directory"
           echo -e "\nContents of .nyc_output (if exists):"
           ls -la .nyc_output/ 2>/dev/null || echo "Directory does not exist or is empty"
+          echo -e "\nFile count in .nyc_output:"
+          find .nyc_output/ -type f | wc -l
           echo -e "\nSearching for coverage files:"
           find . -name "*coverage*.json" -type f 2>/dev/null || echo "No coverage files found"
+          echo -e "\nTesting read permissions:"
+          test -r .nyc_output/ && echo ".nyc_output is readable" || echo ".nyc_output is NOT readable"
 
       - name: Upload blob report
         uses: actions/upload-artifact@v4
@@ -95,7 +99,7 @@ jobs:
           name: coverage-${{ matrix.shard }}
           path: .nyc_output/
           retention-days: 30
-          if-no-files-found: ignore
+          if-no-files-found: error
 
       - name: Upload screenshots and videos
         uses: actions/upload-artifact@v4
@@ -188,6 +192,20 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install
+
+      - name: Debug available artifacts
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const artifacts = await github.rest.actions.listWorkflowRunArtifacts({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              run_id: context.runId,
+            });
+            console.log('Available artifacts:');
+            artifacts.data.artifacts.forEach(artifact => {
+              console.log(`- ${artifact.name} (${artifact.size_in_bytes} bytes)`);
+            });
 
       - name: Download all coverage reports
         uses: actions/download-artifact@v4
