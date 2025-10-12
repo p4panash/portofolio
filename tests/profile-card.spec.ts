@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from './coverage';
 
 test.describe('ProfileCard Component', () => {
 	test.beforeEach(async ({ page }) => {
