@@ -192,9 +192,28 @@ jobs:
       - name: Download all coverage reports
         uses: actions/download-artifact@v4
         with:
-          path: .nyc_output/
+          path: coverage-artifacts/
           pattern: coverage-*
           merge-multiple: true
+
+      - name: Debug downloaded coverage artifacts
+        run: |
+          echo "Contents of coverage-artifacts/:"
+          ls -la coverage-artifacts/ || echo "coverage-artifacts directory not found"
+          echo -e "\nSearching for all coverage files:"
+          find coverage-artifacts/ -name "*.json" -type f 2>/dev/null || echo "No JSON files found"
+
+      - name: Prepare coverage data
+        run: |
+          # Create .nyc_output directory
+          mkdir -p .nyc_output
+
+          # Copy all coverage JSON files to .nyc_output
+          find coverage-artifacts/ -name "playwright_coverage_*.json" -type f -exec cp {} .nyc_output/ \;
+
+          # Verify files were copied
+          echo "Coverage files in .nyc_output:"
+          ls -la .nyc_output/
 
       - name: Merge coverage reports
         run: |
