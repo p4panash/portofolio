@@ -1,7 +1,7 @@
 # create-svelte
 
-[![Playwright Tests](https://github.com/p4panash/portofolio/actions/workflows/playwright.yml/badge.svg)](https://github.com/p4panash/portofolio/actions/workflows/playwright.yml)
 [![Lint and TypeScript Check](https://github.com/p4panash/portofolio/actions/workflows/lint-and-typecheck.yml/badge.svg)](https://github.com/p4panash/portofolio/actions/workflows/lint-and-typecheck.yml)
+[![Playwright Tests](https://github.com/p4panash/portofolio/actions/workflows/playwright.yml/badge.svg)](https://github.com/p4panash/portofolio/actions/workflows/playwright.yml)
 [![Coverage](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/p4panash/portofolio/main/.github/badges/coverage.json)](https://github.com/p4panash/portofolio/actions/workflows/playwright.yml)
 
 Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).
