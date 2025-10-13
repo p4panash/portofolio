@@ -68,26 +68,6 @@ jobs:
           CI: true
         run: pnpm exec playwright test --project=chromium --shard=${{ matrix.shard }}/3
 
-      - name: Debug coverage output
-        if: always()
-        run: |
-          echo "=== SHARD ${{ matrix.shard }} DEBUG ==="
-          echo "Current directory:"
-          pwd
-          echo -e "\nAll directories:"
-          ls -la
-          echo -e "\nChecking for .nyc_output directory:"
-          if [ -d .nyc_output ]; then
-            echo ".nyc_output EXISTS"
-            echo "Contents:"
-            ls -la .nyc_output/
-            echo "File count: $(find .nyc_output/ -type f | wc -l)"
-          else
-            echo ".nyc_output DOES NOT EXIST"
-          fi
-          echo -e "\nSearching entire workspace for coverage files:"
-          find . -name "playwright_coverage_*.json" -type f 2>/dev/null | head -5
-
       - name: Upload blob report
         uses: actions/upload-artifact@v4
         if: always()
@@ -95,14 +75,6 @@ jobs:
           name: blob-report-${{ matrix.shard }}
           path: blob-report/
           retention-days: 30
-
-      - name: Debug before coverage upload
-        if: always()
-        run: |
-          echo "RIGHT BEFORE UPLOAD:"
-          pwd
-          ls -la .nyc_output/ 2>/dev/null || echo ".nyc_output not found"
-          find .nyc_output/ -type f 2>/dev/null | wc -l || echo "Can't count files"
 
       - name: Upload coverage data
         uses: actions/upload-artifact@v4
@@ -206,20 +178,6 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: Debug available artifacts
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const artifacts = await github.rest.actions.listWorkflowRunArtifacts({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              run_id: context.runId,
-            });
-            console.log('Available artifacts:');
-            artifacts.data.artifacts.forEach(artifact => {
-              console.log(`- ${artifact.name} (${artifact.size_in_bytes} bytes)`);
-            });
-
       - name: Download all coverage reports
         uses: actions/download-artifact@v4
         with:
@@ -227,24 +185,11 @@ jobs:
           pattern: coverage-*
           merge-multiple: true
 
-      - name: Debug downloaded coverage artifacts
-        run: |
-          echo "Contents of coverage-artifacts/:"
-          ls -la coverage-artifacts/ || echo "coverage-artifacts directory not found"
-          echo -e "\nSearching for all coverage files:"
-          find coverage-artifacts/ -name "*.json" -type f 2>/dev/null || echo "No JSON files found"
-
       - name: Prepare coverage data
         run: |
-          # Create .nyc_output directory
+          # Create .nyc_output directory and copy all coverage files
           mkdir -p .nyc_output
-
-          # Copy all coverage JSON files to .nyc_output
           find coverage-artifacts/ -name "playwright_coverage_*.json" -type f -exec cp {} .nyc_output/ \;
-
-          # Verify files were copied
-          echo "Coverage files in .nyc_output:"
-          ls -la .nyc_output/
 
       - name: Merge coverage reports
         run: |
