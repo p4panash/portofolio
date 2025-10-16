@@ -10,6 +10,7 @@ const config = {
 	kit: {
 		adapter: adapter({
 			// Output directory for static files
+			runtime: 'nodejs22.9',
 			pages: 'build',
 			assets: 'build',
 			fallback: undefined,
