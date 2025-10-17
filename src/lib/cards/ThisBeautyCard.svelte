@@ -38,6 +38,8 @@
 			height={600}
 			loading={'eager'}
 			className="w-full h-full object-contain transform rotate-12 transition-transform duration-300 rounded-xl"
+			responsiveSizes={[640, 960, 1280, 1920]}
+			sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
 		/>
 	</div>
 	<div class="flex gap-1 relative z-20">

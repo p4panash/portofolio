@@ -19,6 +19,10 @@ const config = {
 				if (path === '/resume.pdf') {
 					return;
 				}
+				// Ignore missing responsive images (some images are too small to have all sizes)
+				if (path.match(/-\d+w\.webp$/)) {
+					return;
+				}
 				throw new Error(message);
 			}
 		}
