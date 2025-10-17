@@ -6,27 +6,24 @@
 	export let className: string = '';
 	export let loading: 'lazy' | 'eager' = 'lazy';
 	export let fetchpriority: 'high' | 'low' | 'auto' = 'auto';
+	export let sizes: string = ''; // Optional override for custom sizes attribute
 
-	// Generate srcset for responsive images
-	// Note: We generate a conservative srcset. The browser will only load what exists.
-	// Large images (photos) have: 640w, 960w, 1280w, 1920w
-	// Medium images (projects) may have: 640w, 960w
-	export let responsiveSizes: number[] = [];
-	export let sizes: string = ''; // Allow custom sizes attribute
-
-	function generateSrcset(src: string, responsiveSizes: number[]): string {
-		if (!src.endsWith('.webp') || responsiveSizes.length === 0) return '';
+	// Auto-generate srcset for responsive images
+	// Assumes standard sizes [640w, 960w, 1280w, 1920w] exist for all .webp images
+	function generateSrcset(src: string): string {
+		if (!src.endsWith('.webp')) return '';
 
 		const baseSrc = src.replace('.webp', '');
-		const srcsetParts = responsiveSizes.map((size) => `${baseSrc}-${size}w.webp ${size}w`);
+		const standardSizes = [640, 960, 1280, 1920];
+		const srcsetParts = standardSizes.map((size) => `${baseSrc}-${size}w.webp ${size}w`);
 
 		return srcsetParts.join(', ');
 	}
 
-	$: srcset = generateSrcset(src, responsiveSizes);
-	// If sizes not provided, generate a reasonable default based on common layouts
-	$: computedSizes =
-		sizes || (srcset ? '(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw' : '');
+	$: srcset = generateSrcset(src);
+	// Default sizes: full width on mobile (≤768px), ~1/3 width on desktop
+	// This matches typical card layouts in the portfolio
+	$: computedSizes = sizes || (srcset ? '(max-width: 768px) 100vw, 33vw' : '');
 </script>
 
 <img

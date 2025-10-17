@@ -30,7 +30,7 @@ test.describe('ContactCard Component', () => {
 
 	test.describe('Contact Links', () => {
 		test('should have LinkedIn link with correct href', async ({ page }) => {
-			const linkedInLink = page.getByLabel('LinkedIn');
+			const linkedInLink = page.getByRole('link', { name: 'LinkedIn' });
 			await expect(linkedInLink).toBeVisible();
 			await expect(linkedInLink).toHaveAttribute(
 				'href',
@@ -39,31 +39,31 @@ test.describe('ContactCard Component', () => {
 		});
 
 		test('should have GitHub link with correct href', async ({ page }) => {
-			const githubLink = page.getByLabel('GitHub');
+			const githubLink = page.getByRole('link', { name: 'GitHub' });
 			await expect(githubLink).toBeVisible();
 			await expect(githubLink).toHaveAttribute('href', 'https://github.com/p4panash');
 		});
 
 		test('should have Email link with mailto', async ({ page }) => {
-			const emailLink = page.getByLabel('Email');
+			const emailLink = page.getByRole('link', { name: 'Email' });
 			await expect(emailLink).toBeVisible();
 			await expect(emailLink).toHaveAttribute('href', /^mailto:/);
 		});
 
 		test('should open LinkedIn in new tab', async ({ page }) => {
-			const linkedInLink = page.getByLabel('LinkedIn');
+			const linkedInLink = page.getByRole('link', { name: 'LinkedIn' });
 			await expect(linkedInLink).toHaveAttribute('target', '_blank');
 			await expect(linkedInLink).toHaveAttribute('rel', 'noopener noreferrer');
 		});
 
 		test('should open GitHub in new tab', async ({ page }) => {
-			const githubLink = page.getByLabel('GitHub');
+			const githubLink = page.getByRole('link', { name: 'GitHub' });
 			await expect(githubLink).toHaveAttribute('target', '_blank');
 			await expect(githubLink).toHaveAttribute('rel', 'noopener noreferrer');
 		});
 
 		test('should not open Email in new tab', async ({ page }) => {
-			const emailLink = page.getByLabel('Email');
+			const emailLink = page.getByRole('link', { name: 'Email' });
 			const target = await emailLink.getAttribute('target');
 			expect(target).toBeNull();
 		});
@@ -79,9 +79,9 @@ test.describe('ContactCard Component', () => {
 		});
 
 		test('should display contact names below icons', async ({ page }) => {
-			const linkedInLink = page.getByLabel('LinkedIn');
-			const githubLink = page.getByLabel('GitHub');
-			const emailLink = page.getByLabel('Email');
+			const linkedInLink = page.getByRole('link', { name: 'LinkedIn' });
+			const githubLink = page.getByRole('link', { name: 'GitHub' });
+			const emailLink = page.getByRole('link', { name: 'Email' });
 
 			await expect(linkedInLink.locator('span', { hasText: 'LinkedIn' })).toBeVisible();
 			await expect(githubLink.locator('span', { hasText: 'GitHub' })).toBeVisible();
@@ -97,7 +97,7 @@ test.describe('ContactCard Component', () => {
 		});
 
 		test('should display icons and text in column layout', async ({ page }) => {
-			const linkedInLink = page.getByLabel('LinkedIn');
+			const linkedInLink = page.getByRole('link', { name: 'LinkedIn' });
 			await expect(linkedInLink).toHaveClass(/flex-col/);
 			await expect(linkedInLink).toHaveClass(/items-center/);
 		});
@@ -105,19 +105,19 @@ test.describe('ContactCard Component', () => {
 
 	test.describe('Hover Interactions', () => {
 		test('should scale on hover', async ({ page }) => {
-			const linkedInLink = page.getByLabel('LinkedIn');
+			const linkedInLink = page.getByRole('link', { name: 'LinkedIn' });
 			await expect(linkedInLink).toHaveClass(/hover:scale-110/);
 		});
 
 		test('should change text color on hover', async ({ page }) => {
-			const linkedInLink = page.getByLabel('LinkedIn');
+			const linkedInLink = page.getByRole('link', { name: 'LinkedIn' });
 			const nameSpan = linkedInLink.locator('span');
 
 			await expect(nameSpan).toHaveClass(/group-hover:text-vivid-blue/);
 		});
 
 		test('should have transition effects', async ({ page }) => {
-			const linkedInLink = page.getByLabel('LinkedIn');
+			const linkedInLink = page.getByRole('link', { name: 'LinkedIn' });
 			await expect(linkedInLink).toHaveClass(/transition-transform/);
 			await expect(linkedInLink).toHaveClass(/duration-200/);
 		});
@@ -125,21 +125,21 @@ test.describe('ContactCard Component', () => {
 
 	test.describe('Accessibility', () => {
 		test('should have proper aria-labels', async ({ page }) => {
-			await expect(page.getByLabel('LinkedIn')).toBeVisible();
-			await expect(page.getByLabel('GitHub')).toBeVisible();
-			await expect(page.getByLabel('Email')).toBeVisible();
+			await expect(page.getByRole('link', { name: 'LinkedIn' })).toBeVisible();
+			await expect(page.getByRole('link', { name: 'GitHub' })).toBeVisible();
+			await expect(page.getByRole('link', { name: 'Email' })).toBeVisible();
 		});
 
 		test('should be keyboard accessible', async ({ page }) => {
-			const linkedInLink = page.getByLabel('LinkedIn');
+			const linkedInLink = page.getByRole('link', { name: 'LinkedIn' });
 			await linkedInLink.focus();
 			await expect(linkedInLink).toBeFocused();
 		});
 
 		test('should allow tab navigation between links', async ({ page }) => {
-			const linkedInLink = page.getByLabel('LinkedIn');
-			const githubLink = page.getByLabel('GitHub');
-			const emailLink = page.getByLabel('Email');
+			const linkedInLink = page.getByRole('link', { name: 'LinkedIn' });
+			const githubLink = page.getByRole('link', { name: 'GitHub' });
+			const emailLink = page.getByRole('link', { name: 'Email' });
 
 			// Focus the first link
 			await linkedInLink.focus();
@@ -178,7 +178,7 @@ test.describe('ContactCard Component', () => {
 			await page.waitForTimeout(500);
 
 			const contactCard = page.locator("text=Let's Connect").locator('..').locator('..');
-			const githubIcon = contactCard.getByLabel('GitHub').locator('svg').first();
+			const githubIcon = contactCard.getByRole('link', { name: 'GitHub' }).locator('svg').first();
 
 			// GitHub icon should be visible in dark mode
 			await expect(githubIcon).toBeVisible();
