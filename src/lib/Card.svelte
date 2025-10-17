@@ -40,6 +40,7 @@
 		on:click={handleClick}
 		class={baseClasses + ' text-left w-full'}
 		data-testid={testId}
+		aria-label={title ? `Open ${title} details` : 'Open details'}
 	>
 		<div class="{noPadding ? '' : 'p-5'} w-full h-full flex flex-col relative">
 			{#if title && !hiddenTitle}
