@@ -255,7 +255,7 @@ test.describe('Carousel Component', () => {
 			// Verify we're on slide 1 (check the expanded image src)
 			const expandedImage = carousel.getExpandedImage();
 			const src = await expandedImage.getAttribute('src');
-			expect(src).toContain('2.jpeg');
+			expect(src).toContain('2.webp');
 		});
 
 		test('should preserve expanded state when navigating', async ({ page }) => {
@@ -278,7 +278,7 @@ test.describe('Carousel Component', () => {
 			// Should be on slide 1 now
 			const expandedImage = carousel.getExpandedImage();
 			const src = await expandedImage.getAttribute('src');
-			expect(src).toContain('2.jpeg');
+			expect(src).toContain('2.webp');
 		});
 
 		test('should display expanded image with correct styling', async ({ page }) => {
@@ -413,7 +413,7 @@ test.describe('Carousel Component', () => {
 			// Get initial image src
 			const expandedImage = carousel.getExpandedImage();
 			const initialSrc = await expandedImage.getAttribute('src');
-			expect(initialSrc).toContain('1.jpeg');
+			expect(initialSrc).toContain('1.webp');
 
 			// Press ArrowRight to go to next slide
 			await page.keyboard.press('ArrowRight');
@@ -421,7 +421,7 @@ test.describe('Carousel Component', () => {
 
 			// Should be on slide 2
 			const nextSrc = await expandedImage.getAttribute('src');
-			expect(nextSrc).toContain('2.jpeg');
+			expect(nextSrc).toContain('2.webp');
 
 			// Press ArrowLeft to go back
 			await page.keyboard.press('ArrowLeft');
@@ -429,7 +429,7 @@ test.describe('Carousel Component', () => {
 
 			// Should be back on slide 1
 			const backSrc = await expandedImage.getAttribute('src');
-			expect(backSrc).toContain('1.jpeg');
+			expect(backSrc).toContain('1.webp');
 		});
 
 		test('should support Tab navigation to focus buttons', async ({ page, browserName }) => {
