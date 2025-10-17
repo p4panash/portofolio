@@ -32,10 +32,11 @@
 		class="absolute -top-4 -right-16 w-full h-4/5 flex items-start justify-end pointer-events-none overflow-visible z-10"
 	>
 		<OptimizedImage
-			src="/images/projects/imi-permit.png"
+			src="/images/projects/imi-permit.webp"
 			alt="Imi Permit Screenshot"
 			width={800}
 			height={600}
+			loading={'eager'}
 			className="w-full h-full object-cover transform rotate-12 transition-transform duration-300 rounded-xl"
 		/>
 	</div>

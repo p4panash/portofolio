@@ -1,4 +1,5 @@
 <script lang="ts">
+	import type { ComponentType, SvelteComponent } from 'svelte';
 	import ProfileCard from '$lib/cards/ProfileCard.svelte';
 	import ThisBeautyCard from '$lib/cards/ThisBeautyCard.svelte';
 	import MangaAppCard from '$lib/cards/MangaAppCard.svelte';
@@ -7,12 +8,17 @@
 	import ImiPermitCard from '$lib/cards/ImiPermitCard.svelte';
 	import MapCard from '$lib/cards/MapCard.svelte';
 	import ContactCard from '$lib/cards/ContactCard.svelte';
-	import ProjectModal from '$lib/ProjectModal.svelte';
 
 	let isModalOpen = false;
 	let selectedProject = '';
+	let ProjectModal: ComponentType<SvelteComponent> | null = null;
 
-	function openProjectModal(projectTitle: string) {
+	// Lazy load ProjectModal only when needed
+	async function openProjectModal(projectTitle: string) {
+		if (!ProjectModal) {
+			const module = await import('$lib/ProjectModal.svelte');
+			ProjectModal = module.default;
+		}
 		selectedProject = projectTitle;
 		isModalOpen = true;
 	}
@@ -48,4 +54,12 @@
 	<ContactCard sizeStyling="lg:col-span-1 lg:row-span-1" />
 </div>
 
-<ProjectModal isOpen={isModalOpen} projectTitle={selectedProject} onClose={closeModal} />
+<!-- Lazy-loaded Project Modal -->
+{#if isModalOpen && ProjectModal}
+	<svelte:component
+		this={ProjectModal}
+		isOpen={isModalOpen}
+		projectTitle={selectedProject}
+		onClose={closeModal}
+	/>
+{/if}

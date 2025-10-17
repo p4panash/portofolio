@@ -30,6 +30,7 @@
 	class={'cursor-pointer rounded shadow flex p-1 justify-center bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm ' +
 		(gradientBackground ? background : '')}
 	on:click={expand}
+	aria-label={isExpandable ? `${name} (click to ${isExpanded ? 'collapse' : 'expand'})` : name}
 >
 	<div class="flex gap-2">
 		{#if Icon}
