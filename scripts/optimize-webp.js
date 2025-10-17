@@ -52,16 +52,15 @@ async function optimizeWebP(imagePath) {
 		await fs.unlink(tempPath);
 
 		// Generate responsive sizes for larger images
+		// Always generate all 4 standard sizes to keep OptimizedImage component simple
 		const sizes = [];
-		if (metadata.width > 1200) {
+		if (metadata.width > 800) {
 			sizes.push(
 				{ width: 640, suffix: '-640w' },
 				{ width: 960, suffix: '-960w' },
 				{ width: 1280, suffix: '-1280w' },
 				{ width: 1920, suffix: '-1920w' }
 			);
-		} else if (metadata.width > 800) {
-			sizes.push({ width: 640, suffix: '-640w' }, { width: 960, suffix: '-960w' });
 		}
 
 		// Generate responsive versions
