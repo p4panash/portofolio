@@ -30,7 +30,7 @@
 </script>
 
 <div
-	class="container min-h-[95vh] mx-auto grid gap-3 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 grid-rows-5"
+	class="container h-[95vh] mx-auto grid gap-3 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 auto-rows-fr"
 >
 	<ProfileCard sizeStyling="lg:col-span-2 lg:row-span-2" />
 	<ThisBeautyCard

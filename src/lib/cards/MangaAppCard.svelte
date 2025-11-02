@@ -36,7 +36,7 @@
 			alt="Manga App Screenshot"
 			width={800}
 			height={600}
-			loading={'eager'}
+			loading={'lazy'}
 			className="w-full h-full object-cover transform rotate-12 transition-transform duration-300 rounded-xl"
 		/>
 	</div>
