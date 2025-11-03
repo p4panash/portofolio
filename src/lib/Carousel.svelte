@@ -150,14 +150,15 @@
 			<span class="text-2xl font-bold text-gray-700 dark:text-gray-200">×</span>
 		</button>
 
-		<!-- svelte-ignore a11y-click-events-have-key-events -->
-		<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
-		<img
-			src={images[currentIndex]}
-			alt="Expanded view of slide {currentIndex + 1}"
-			class="max-w-[90vw] max-h-[90vh] object-contain"
-			on:click|stopPropagation
-		/>
+		<div on:click|stopPropagation role="presentation">
+			<OptimizedImage
+				src={images[currentIndex]}
+				alt="Expanded view of slide {currentIndex + 1}"
+				className="max-w-[90vw] max-h-[90vh] object-contain"
+				loading="eager"
+				sizes="90vw"
+			/>
+		</div>
 
 		{#if images.length > 1}
 			<!-- Previous Button -->

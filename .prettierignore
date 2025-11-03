@@ -5,3 +5,4 @@ yarn.lock
 
 # GitHub Workflows
 .github/workflows/
+.github/badges/

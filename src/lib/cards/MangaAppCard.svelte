@@ -32,10 +32,11 @@
 		class="absolute -top-4 -right-8 w-4/5 h-full flex items-start justify-end pointer-events-none overflow-visible z-10"
 	>
 		<OptimizedImage
-			src="/images/projects/manga-app.png"
+			src="/images/projects/manga-app.webp"
 			alt="Manga App Screenshot"
 			width={800}
 			height={600}
+			loading={'lazy'}
 			className="w-full h-full object-cover transform rotate-12 transition-transform duration-300 rounded-xl"
 		/>
 	</div>

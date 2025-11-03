@@ -6,12 +6,12 @@
 
 	// Placeholder images - will be replaced with actual photos
 	const images = [
-		'/images/photos/1.jpeg',
-		'/images/photos/2.jpeg',
-		'/images/photos/3.jpeg',
-		'/images/photos/4.jpeg',
-		'/images/photos/5.jpeg',
-		'/images/photos/6.jpg'
+		'/images/photos/1.webp',
+		'/images/photos/2.webp',
+		'/images/photos/3.webp',
+		'/images/photos/4.webp',
+		'/images/photos/5.webp',
+		'/images/photos/6.webp'
 	];
 </script>
 
