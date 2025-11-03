@@ -103,7 +103,7 @@ jobs:
             else
               git commit -m "Update Playwright snapshots from CI
 
-          Triggered by: ${{ github.event.comment.user.login }}
+          Triggered by: ${{ github.event.comment.user.login }}"
               git push
             fi
             echo "HAS_CHANGES=true" >> $GITHUB_ENV

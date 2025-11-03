@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { browser } from '$app/environment';
 	import { icons } from './constants';
 	import { darkMode } from './stores/theme';
 
