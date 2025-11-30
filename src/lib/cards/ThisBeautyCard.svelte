@@ -32,10 +32,11 @@
 		class="absolute -top-20 -right-20 w-[130%] h-[130%] flex items-start justify-end pointer-events-none overflow-visible z-10"
 	>
 		<OptimizedImage
-			src="/images/projects/this-beauty.png"
+			src="/images/projects/this-beauty.webp"
 			alt="This Beauty Screenshot"
 			width={800}
 			height={600}
+			loading={'lazy'}
 			className="w-full h-full object-contain transform rotate-12 transition-transform duration-300 rounded-xl"
 		/>
 	</div>
