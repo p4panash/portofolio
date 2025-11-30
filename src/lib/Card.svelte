@@ -10,13 +10,7 @@
 	export let onClick = () => {};
 	export let testId = '';
 
-	let isFocused = hiddenTitle ? false : true;
-
-	const changeFocus = () => {
-		if (!hiddenTitle) return;
-
-		isFocused = !isFocused;
-	};
+	let isHovered = false;
 
 	const handleClick = () => {
 		if (clickable && onClick) {
@@ -35,14 +29,15 @@
 {#if clickable}
 	<button
 		type="button"
-		on:mouseenter={changeFocus}
-		on:mouseleave={changeFocus}
+		on:mouseenter={() => (isHovered = true)}
+		on:mouseleave={() => (isHovered = false)}
 		on:click={handleClick}
 		class={baseClasses + ' text-left w-full'}
 		data-testid={testId}
 		aria-label={title ? `Open ${title} details` : 'Open details'}
 	>
 		<div class="{noPadding ? '' : 'p-5'} w-full h-full flex flex-col relative">
+			<!-- Regular title (shown at top) -->
 			{#if title && !hiddenTitle}
 				<h2
 					class="text-sm font-semibold mb-2 text-light-secondary dark:text-dark-secondary uppercase tracking-wider"
@@ -50,18 +45,24 @@
 					{title}
 				</h2>
 			{/if}
+
+			<!-- Card content -->
 			<div class="flex-1 flex flex-col justify-end">
 				<slot />
 			</div>
+
+			<!-- Title badge (always visible on mobile, hover on larger screens) -->
 			{#if hiddenTitle}
 				<div
-					class="flex items-center gap-2 absolute right-4 top-4 rounded-full backdrop-blur-sm bg-white/80 dark:bg-gray-900/80 shadow-lg py-2 px-3 transition-all duration-300 z-30 {isFocused
-						? 'pr-4'
-						: ''}"
+					class="flex items-center gap-2 absolute right-4 top-4 rounded-full backdrop-blur-sm bg-white/80 dark:bg-gray-900/80 shadow-lg py-2 z-30 transition-all duration-300 {isHovered
+						? 'px-4'
+						: 'px-4 md:px-3'}"
 				>
-					{#if isFocused}
-						<span class="font-semibold whitespace-nowrap text-sm">{title}</span>
-					{/if}
+					<span
+						class="font-semibold whitespace-nowrap text-sm {isHovered
+							? ''
+							: 'md:hidden'}">{title}</span
+					>
 					<NewTab size={16} />
 				</div>
 			{/if}
@@ -70,6 +71,7 @@
 {:else}
 	<div class={baseClasses}>
 		<div class="{noPadding ? '' : 'p-5'} w-full h-full flex flex-col relative">
+			<!-- Regular title (shown at top) -->
 			{#if title && !hiddenTitle}
 				<h2
 					class="text-sm font-semibold mb-2 text-light-secondary dark:text-dark-secondary uppercase tracking-wider"
@@ -77,6 +79,8 @@
 					{title}
 				</h2>
 			{/if}
+
+			<!-- Card content -->
 			<div class="flex-1 flex flex-col justify-end">
 				<slot />
 			</div>
