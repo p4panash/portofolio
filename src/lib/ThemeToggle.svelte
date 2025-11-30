@@ -8,7 +8,7 @@
 
 <button
 	on:click={handleToggle}
-	class="relative w-12 h-12 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200 flex items-center justify-center"
+	class="relative w-12 h-12 rounded-full bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200 flex items-center justify-center shadow-lg"
 	aria-label="Toggle theme"
 >
 	{#if $darkMode}

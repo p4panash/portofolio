@@ -6,7 +6,7 @@
 <div style="display: contents">
 	<main class="min-h-screen bg-light-bg dark:bg-dark-bg text-light-text dark:text-dark-text">
 		<!-- Floating Theme Toggle -->
-		<div class="fixed right-6 z-50" style="top: 6px;">
+		<div class="fixed right-6 z-50" style="top: 25px;">
 			<ThemeToggle />
 		</div>
 

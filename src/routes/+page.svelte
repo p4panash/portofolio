@@ -30,28 +30,34 @@
 </script>
 
 <div
-	class="container h-[95vh] mx-auto grid gap-3 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 auto-rows-fr"
+	class="container md:h-[95vh] mx-auto grid gap-3 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 auto-rows-fr px-4 pb-4 md:p-0"
 >
-	<ProfileCard sizeStyling="lg:col-span-2 lg:row-span-2" />
+	<ProfileCard
+		sizeStyling="col-span-1 row-span-2 order-1 md:col-span-1 md:row-span-2 md:order-1 lg:col-span-2 lg:row-span-2 lg:order-none"
+	/>
 	<ThisBeautyCard
-		sizeStyling="lg:col-span-1 lg:row-span-2"
+		sizeStyling="col-span-1 row-span-2 order-5 md:col-span-1 md:row-span-1 md:order-7 lg:col-span-1 lg:row-span-2 lg:order-none"
 		onClick={() => openProjectModal('This Beauty')}
 	/>
 	<MangaAppCard
-		sizeStyling="lg:col-span-1 lg:row-span-2"
+		sizeStyling="col-span-1 row-span-2 order-4 md:col-span-1 md:row-span-2 md:order-5 lg:col-span-1 lg:row-span-2 lg:order-none"
 		onClick={() => openProjectModal('Manga App')}
 	/>
 	<TechStackCard
-		sizeStyling="lg:col-span-1 lg:row-span-1"
+		sizeStyling="col-span-1 row-span-1 order-2 md:col-span-1 md:row-span-1 md:order-3 lg:col-span-1 lg:row-span-1 lg:order-none"
 		onClick={() => openProjectModal('Tech Stack')}
 	/>
-	<PhotosCard sizeStyling="lg:col-span-1 lg:row-span-2" />
+	<PhotosCard sizeStyling="hidden lg:block lg:col-span-1 lg:row-span-2" />
 	<ImiPermitCard
-		sizeStyling="lg:col-span-2 lg:row-span-3"
+		sizeStyling="col-span-1 row-span-2 order-3 md:col-span-1 md:row-span-3 md:order-2 lg:col-span-2 lg:row-span-3 lg:order-none"
 		onClick={() => openProjectModal('Imi Permit')}
 	/>
-	<MapCard sizeStyling="lg:col-span-1 lg:row-span-2" />
-	<ContactCard sizeStyling="lg:col-span-1 lg:row-span-1" />
+	<MapCard
+		sizeStyling="hidden md:block md:col-span-1 md:row-span-2 md:order-4 lg:col-span-1 lg:row-span-2 lg:order-none"
+	/>
+	<ContactCard
+		sizeStyling="col-span-1 row-span-1 order-6 md:col-span-1 md:row-span-1 md:order-6 lg:col-span-1 lg:row-span-1 lg:order-none"
+	/>
 </div>
 
 <!-- Lazy-loaded Project Modal -->
